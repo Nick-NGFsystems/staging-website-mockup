@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #f5f2ed;
+  --surface: #ffffff;
+  --ink: #1f1f1f;
+  --muted: #666666;
+  --brand: #2d5b57;
+  --brand-dark: #1f3f3b;
+  --line: #d9d2c8;
+  --radius: 14px;
+  --shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-playfair), Georgia, serif;
+  line-height: 1.2;
+}
+
+:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: fixed;
+  top: -100px;
+  left: 1rem;
+  z-index: 100;
+  border-radius: 9999px;
+  background: var(--brand);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  transition: top 0.2s ease;
+}
+.skip-link:focus { top: 0.75rem; }
+
+/* ── Scrolling testimonial marquee ── */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+}
+@media (max-width: 820px) {
+  .marquee-track { animation: none; overflow-x: auto; }
+}
