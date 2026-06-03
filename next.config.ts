@@ -1,6 +1,12 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
+  // Pin the workspace root to this project — there is a stray lockfile in the
+  // parent GitHub/ folder, and without this Turbopack scans every sibling repo
+  // (blowing out memory during build).
+  turbopack: {
+    root: __dirname,
+  },
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'images.unsplash.com' },

@@ -5,29 +5,30 @@ export const dynamic = 'force-dynamic'
 export default async function HomePage() {
   const content = await getNgfContent()
 
-  const beforeAfterItems = getItems(content, 'beforeAfter.items')
-  const defaultBeforeAfter = beforeAfterItems.length > 0
-    ? beforeAfterItems
+  const recentItems = getItems(content, 'home.recent')
+  const defaultRecent = recentItems.length > 0
+    ? recentItems
     : [
-        { title: 'Lakeview Drive', before: '/placeholder-before-1.jpg', after: '/placeholder-after-1.jpg' },
-        { title: 'Riverstone Court', before: '/placeholder-before-2.jpg', after: '/placeholder-after-2.jpg' },
+        { title: 'Bright Living Room', image: '/images/staged/staged-15.webp' },
+        { title: 'Open-Concept Kitchen', image: '/images/staged/staged-17.webp' },
+        { title: 'Serene Primary Suite', image: '/images/staged/staged-09.webp' },
       ]
 
   const videoItems = getItems(content, 'home.videos')
   const defaultVideos = videoItems.length > 0
     ? videoItems
     : [
-        { title: 'Vacant Home Transformation' },
-        { title: 'New Construction Reveal' },
+        { title: 'Staging video title' },
+        { title: 'Staging video title' },
       ]
 
   const teamMembers = getItems(content, 'team.members')
   const defaultTeam = teamMembers.length > 0
     ? teamMembers
     : [
-        { photo: '/placeholder-team-1.jpg', name: 'Melissa Perrine', role: 'Lead Stager & Founder' },
-        { photo: '/placeholder-team-2.jpg', name: 'Team Member', role: 'Associate Stager' },
-        { photo: '/placeholder-team-3.jpg', name: 'Team Member', role: 'Design Consultant' },
+        { photo: '/placeholder-team-1.jpg', name: 'Melissa Perrine', role: 'Founder' },
+        { photo: '/placeholder-team-2.jpg', name: 'Team Member', role: 'Role' },
+        { photo: '/placeholder-team-3.jpg', name: 'Team Member', role: 'Role' },
       ]
 
   const blogItems = getItems(content, 'blog.posts')
@@ -35,44 +36,40 @@ export default async function HomePage() {
     ? blogItems
     : [
         {
-          image: '/placeholder-blog-1.jpg',
-          title: '5 Staging Secrets That Sell Homes Faster',
-          summary: 'Small changes to furniture arrangement and lighting can make a dramatic difference in how buyers perceive your space.',
+          image: '/images/staged/staged-06.webp',
+          title: 'Blog post title',
+          summary: 'Add a short summary of this post here.',
           link: '/blog',
         },
         {
-          image: '/placeholder-blog-2.jpg',
-          title: 'Why Neutral Doesn\'t Have to Mean Boring',
-          summary: 'Learn how the right neutral palette creates warmth and broad appeal without feeling sterile.',
+          image: '/images/staged/staged-13.webp',
+          title: 'Blog post title',
+          summary: 'Add a short summary of this post here.',
           link: '/blog',
         },
         {
-          image: '/placeholder-blog-3.jpg',
-          title: 'New Construction Staging: First Impressions',
-          summary: 'Empty new builds present unique challenges — here\'s how we make them feel like home.',
+          image: '/images/staged/staged-19.webp',
+          title: 'Blog post title',
+          summary: 'Add a short summary of this post here.',
           link: '/blog',
         },
       ]
 
   const reviews = [
-    "Melissa transformed our home completely — it sold in 3 days over asking!",
-    "The before and after was unbelievable. Worth every penny.",
-    "Professional, timely, and the results speak for themselves.",
-    "Our listing photos looked incredible. Buyers were fighting over it.",
-    "Best investment we made before selling. Highly recommend Perrine Interiors.",
-    "The consultation alone gave us a clear plan — staging made it shine.",
-    "Melissa transformed our home completely — it sold in 3 days over asking!",
-    "The before and after was unbelievable. Worth every penny.",
+    'Client testimonial placeholder',
+    'Client testimonial placeholder',
+    'Client testimonial placeholder',
+    'Client testimonial placeholder',
+    'Client testimonial placeholder',
+    'Client testimonial placeholder',
   ]
 
   const featuredIn = [
-    'Grand Rapids Real Producers',
-    'GRARLA',
-    'Guild Mortgage',
-    'GRI',
-    'GRAR Declaration',
-    'Bella Bay Realty',
-    'Top 10 Producer',
+    'Logo placeholder',
+    'Logo placeholder',
+    'Logo placeholder',
+    'Logo placeholder',
+    'Logo placeholder',
   ]
 
   return (
@@ -80,7 +77,7 @@ export default async function HomePage() {
       {/* ── 1. Hero ── */}
       <section
         className="relative min-h-[64vh] bg-cover bg-center flex items-center text-white"
-        style={{ backgroundImage: `url('${content['home.heroImage'] || '/placeholder-hero.jpg'}')` }}
+        style={{ backgroundImage: `url('${content['home.heroImage'] || '/images/hero.webp'}')` }}
       >
         <div className="absolute inset-0 bg-gradient-to-r from-[rgba(12,28,25,0.85)] to-[rgba(12,28,25,0.3)]" />
         <div className="relative z-10 mx-auto w-full max-w-[1120px] px-4">
@@ -110,7 +107,7 @@ export default async function HomePage() {
               data-ngf-type="textarea"
               data-ngf-section="Hero"
             >
-              {content['home.heroBody'] || 'West Michigan\'s premier home staging and consultation service. We help sellers present their properties at their very best — from $250K to $2M.'}
+              {content['home.heroBody'] || 'Professional home staging and home edit consultations to help your listing show its very best.'}
             </p>
             <div className="flex flex-wrap gap-3">
               <a
@@ -164,7 +161,7 @@ export default async function HomePage() {
                 data-ngf-type="text"
                 data-ngf-section="Who We Serve"
               >
-                {content['home.serveCard1Title'] || 'Price Band'}
+                {content['home.serveCard1Title'] || 'Every Price Point'}
               </h3>
               <p
                 className="text-[var(--muted)] text-sm leading-relaxed"
@@ -173,7 +170,7 @@ export default async function HomePage() {
                 data-ngf-type="textarea"
                 data-ngf-section="Who We Serve"
               >
-                {content['home.serveCard1Body'] || 'We specialize in homes priced $250K–$2M, with staging packages tailored to the price point and buyer expectations at each level.'}
+                {content['home.serveCard1Body'] || 'We tailor staging packages to your home\'s price point and the expectations of buyers at that level.'}
               </p>
             </div>
             {/* Card 2 — Property Types */}
@@ -228,71 +225,66 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── 3. Before & After ── */}
+      {/* ── 3. Recent Staging ── */}
       <section className="py-16 md:py-24 bg-white">
         <div className="mx-auto max-w-[1120px] px-4">
           <h2
             className="font-serif text-[clamp(1.8rem,3vw,2.75rem)] text-center mb-4"
-            data-ngf-field="home.beforeAfterHeadline"
+            data-ngf-field="home.recentHeadline"
             data-ngf-label="Section Headline"
             data-ngf-type="text"
-            data-ngf-section="Before & After"
+            data-ngf-section="Recent Staging"
           >
-            {content['home.beforeAfterHeadline'] || 'Before & After'}
+            {content['home.recentHeadline'] || 'Recent Staging'}
           </h2>
           <p
             className="text-center text-[var(--muted)] max-w-[480px] mx-auto mb-12"
-            data-ngf-field="home.beforeAfterIntro"
+            data-ngf-field="home.recentIntro"
             data-ngf-label="Intro"
             data-ngf-type="textarea"
-            data-ngf-section="Before & After"
+            data-ngf-section="Recent Staging"
           >
-            {content['home.beforeAfterIntro'] || 'See the difference professional staging makes.'}
+            {content['home.recentIntro'] || 'See the difference professional staging makes.'}
           </p>
           <div
-            className="grid md:grid-cols-2 gap-8"
-            data-ngf-group="beforeAfter.items"
-            data-ngf-item-fields='[{"key":"title","label":"Project Title","type":"text"},{"key":"before","label":"Before Image","type":"image"},{"key":"after","label":"After Image","type":"image"}]'
+            className="grid md:grid-cols-3 gap-6"
+            data-ngf-group="home.recent"
+            data-ngf-item-label="Project"
+            data-ngf-min-items="1"
+            data-ngf-max-items="9"
+            data-ngf-item-fields='[{"key":"image","label":"Photo","type":"image","aspect":"3:2"},{"key":"title","label":"Project Title","type":"text"}]'
           >
-            {defaultBeforeAfter.map((item, i) => (
-              <div key={i} className="bg-white border border-[var(--line)] rounded-[14px] p-4 shadow-[0_12px_28px_rgba(0,0,0,0.08)]">
+            {defaultRecent.map((item, i) => (
+              <div key={i} className="bg-white border border-[var(--line)] rounded-[14px] overflow-hidden shadow-[0_12px_28px_rgba(0,0,0,0.08)]">
+                <img
+                  src={item.image || '/images/staged/staged-15.webp'}
+                  alt={item.title || `Staged project ${i + 1}`}
+                  className="w-full aspect-[3/2] object-cover"
+                  data-ngf-field={`home.recent.${i}.image`}
+                  data-ngf-label="Photo"
+                  data-ngf-type="image"
+                  data-ngf-section="Recent Staging"
+                  data-ngf-aspect="3:2"
+                />
                 <h3
-                  className="font-serif text-lg mb-3"
-                  data-ngf-field={`beforeAfter.items.${i}.title`}
+                  className="font-serif text-lg p-4"
+                  data-ngf-field={`home.recent.${i}.title`}
                   data-ngf-label="Project Title"
                   data-ngf-type="text"
-                  data-ngf-section="Before & After"
+                  data-ngf-section="Recent Staging"
                 >
                   {item.title || `Project ${i + 1}`}
                 </h3>
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <p className="text-xs uppercase tracking-widest text-[var(--muted)] mb-1.5">Before</p>
-                    <img
-                      src={item.before || '/placeholder-before.jpg'}
-                      alt={`${item.title || `Project ${i + 1}`} before`}
-                      className="w-full aspect-[4/3] object-cover rounded-[10px]"
-                      data-ngf-field={`beforeAfter.items.${i}.before`}
-                      data-ngf-label="Before Image"
-                      data-ngf-type="image"
-                      data-ngf-section="Before & After"
-                    />
-                  </div>
-                  <div>
-                    <p className="text-xs uppercase tracking-widest text-[var(--muted)] mb-1.5">After</p>
-                    <img
-                      src={item.after || '/placeholder-after.jpg'}
-                      alt={`${item.title || `Project ${i + 1}`} after`}
-                      className="w-full aspect-[4/3] object-cover rounded-[10px]"
-                      data-ngf-field={`beforeAfter.items.${i}.after`}
-                      data-ngf-label="After Image"
-                      data-ngf-type="image"
-                      data-ngf-section="Before & After"
-                    />
-                  </div>
-                </div>
               </div>
             ))}
+          </div>
+          <div className="text-center mt-12">
+            <a
+              href="/showcase"
+              className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-[var(--brand)] text-white font-semibold hover:bg-[var(--brand-dark)] transition-colors min-h-[44px]"
+            >
+              View Full Portfolio
+            </a>
           </div>
         </div>
       </section>
@@ -366,6 +358,7 @@ export default async function HomePage() {
                   data-ngf-label="Photo"
                   data-ngf-type="image"
                   data-ngf-section="Team Preview"
+                  data-ngf-aspect="1:1"
                 />
                 <h3
                   className="font-serif text-lg mb-1"

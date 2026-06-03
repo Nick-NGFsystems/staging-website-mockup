@@ -16,20 +16,20 @@ export default async function BlogPage() {
     : [
         {
           image: '/placeholder-blog-1.jpg',
-          title: '5 Staging Secrets That Sell Homes Faster',
-          summary: 'Small changes to furniture arrangement, lighting, and accessory placement can make a dramatic difference in how buyers perceive your space — and how quickly they make an offer.',
+          title: 'Blog post title',
+          summary: 'Add a short summary of this post here.',
           link: '#',
         },
         {
           image: '/placeholder-blog-2.jpg',
-          title: 'Why Neutral Doesn\'t Have to Mean Boring',
-          summary: 'Learn how the right neutral palette creates warmth and broad appeal without feeling sterile. The key is in texture, layering, and strategic pops of color.',
+          title: 'Blog post title',
+          summary: 'Add a short summary of this post here.',
           link: '#',
         },
         {
           image: '/placeholder-blog-3.jpg',
-          title: 'New Construction Staging: Making It Feel Like Home',
-          summary: 'Empty new builds present unique challenges for buyers\' imaginations. Here\'s how we use staging to help buyers visualize their life in a brand-new space.',
+          title: 'Blog post title',
+          summary: 'Add a short summary of this post here.',
           link: '#',
         },
       ]

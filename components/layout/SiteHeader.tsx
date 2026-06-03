@@ -9,8 +9,8 @@ interface Props {
 }
 
 const aboutLinks = [
+  { href: '/consultations', label: 'Consultations' },
   { href: '/team', label: 'Our Team' },
-  { href: '/showcase', label: 'Portfolio' },
   { href: '/blog', label: 'Blog' },
   { href: '/shop', label: 'Shop' },
 ]
@@ -47,8 +47,8 @@ export function SiteHeader({ content }: Props) {
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-4" aria-label="Primary">
           <Link href="/" className={navLinkClass('/')}>Home</Link>
+          <Link href="/showcase" className={navLinkClass('/showcase')}>Portfolio</Link>
           <Link href="/staging" className={navLinkClass('/staging')}>Services</Link>
-          <Link href="/consultations" className={navLinkClass('/consultations')}>Consultations</Link>
 
           {/* About dropdown */}
           <div className="relative group">
@@ -100,8 +100,8 @@ export function SiteHeader({ content }: Props) {
         >
           {[
             { href: '/', label: 'Home' },
+            { href: '/showcase', label: 'Portfolio' },
             { href: '/staging', label: 'Services' },
-            { href: '/consultations', label: 'Consultations' },
           ].map(l => (
             <Link
               key={l.href}

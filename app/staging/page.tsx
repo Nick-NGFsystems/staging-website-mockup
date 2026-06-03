@@ -75,7 +75,7 @@ export default async function StagingPage() {
                 data-ngf-type="textarea"
                 data-ngf-section="Staging Info Cards"
               >
-                {content['staging.card1Body'] || 'Studies show staged homes sell up to 73% faster and for 1–5% more than non-staged properties. Buyers form an emotional connection to a well-presented space — and that connection translates directly into offers.'}
+                {content['staging.card1Body'] || 'A well-presented home helps buyers form an emotional connection to the space — and that connection translates directly into stronger offers.'}
               </p>
             </div>
 

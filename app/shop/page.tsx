@@ -15,22 +15,22 @@ export default async function ShopPage() {
     ? items
     : [
         {
-          image: '/placeholder-product-1.jpg',
-          name: 'Linen Accent Chair',
-          description: 'Neutral linen upholstery with tapered walnut legs. Perfect for a reading nook or bedroom corner. Brand new — never used in a listing.',
-          price: '$425',
+          image: '/images/staged/staged-24.webp',
+          name: 'Product name',
+          description: 'Add a product description here.',
+          price: 'Price',
         },
         {
-          image: '/placeholder-product-2.jpg',
-          name: 'Round Marble Coffee Table',
-          description: 'White marble top with a brushed gold base. 36" diameter. Great for open-concept living rooms.',
-          price: '$580',
+          image: '/images/staged/staged-20.webp',
+          name: 'Product name',
+          description: 'Add a product description here.',
+          price: 'Price',
         },
         {
-          image: '/placeholder-product-3.jpg',
-          name: 'Abstract Wall Art Set',
-          description: 'Set of 3 framed abstract prints in muted earth tones. Each 18×24". Ready to hang.',
-          price: '$195/set',
+          image: '/images/staged/staged-19.webp',
+          name: 'Product name',
+          description: 'Add a product description here.',
+          price: 'Price',
         },
       ]
 
@@ -39,7 +39,7 @@ export default async function ShopPage() {
       {/* ── Hero ── */}
       <section
         className="relative min-h-[42vh] bg-cover bg-center flex items-center text-white"
-        style={{ backgroundImage: `url('${content['shop.heroImage'] || '/placeholder-hero.jpg'}')` }}
+        style={{ backgroundImage: `url('${content['shop.heroImage'] || '/images/staged/staged-17.webp'}')` }}
       >
         <div className="absolute inset-0 bg-gradient-to-r from-[rgba(12,28,25,0.8)] to-[rgba(12,28,25,0.25)]" />
         <div className="relative z-10 mx-auto w-full max-w-[1120px] px-4 max-w-[760px]">
@@ -93,13 +93,14 @@ export default async function ShopPage() {
                 className="bg-white border border-[var(--line)] rounded-[14px] overflow-hidden shadow-[0_12px_28px_rgba(0,0,0,0.08)]"
               >
                 <img
-                  src={item.image || '/placeholder-product.jpg'}
+                  src={item.image || '/images/staged/staged-24.webp'}
                   alt={item.name || `Product ${i + 1}`}
                   className="w-full aspect-[4/3] object-cover"
                   data-ngf-field={`shop.items.${i}.image`}
                   data-ngf-label="Product Image"
                   data-ngf-type="image"
                   data-ngf-section="Shop"
+                  data-ngf-aspect="4:3"
                 />
                 <div className="p-5">
                   <h3

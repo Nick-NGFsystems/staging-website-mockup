@@ -14,10 +14,15 @@ const schema = z.object({
   notes: z.string().optional(),
 })
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-
 export async function POST(req: NextRequest) {
   try {
+    const apiKey = process.env.RESEND_API_KEY
+    if (!apiKey) {
+      console.error('Contact form error: RESEND_API_KEY is not set')
+      return NextResponse.json({ success: false, error: 'Email is not configured' }, { status: 500 })
+    }
+    const resend = new Resend(apiKey)
+
     const body = await req.json() as unknown
     const data = schema.parse(body)
 

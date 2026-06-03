@@ -8,12 +8,14 @@ import './globals.css'
 const inter = Inter({
   variable: '--font-inter',
   subsets: ['latin'],
+  display: 'swap',
 })
 
 const playfair = Playfair_Display({
   variable: '--font-playfair',
   subsets: ['latin'],
-  weight: ['500', '600', '700'],
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
 })
 
 export const metadata: Metadata = {
@@ -26,7 +28,7 @@ export const metadata: Metadata = {
     template: '%s | Perrine Interiors',
   },
   description:
-    'Professional home staging and home edit consultations for properties from $250K to $2M across West Michigan. Before & after transformations, new construction staging, and furniture for sale.',
+    'Professional home staging and home edit consultations across West Michigan.',
   keywords: [
     'home staging',
     'West Michigan home staging',

@@ -17,20 +17,20 @@ export default async function TeamPage() {
         {
           photo: '/placeholder-team-1.jpg',
           name: 'Melissa Perrine',
-          role: 'Lead Stager & Founder',
-          bio: 'Melissa founded Perrine Interiors with a passion for transforming spaces and helping sellers achieve their best possible outcome. With years of experience across occupied, vacant, and new construction properties, she brings vision and professionalism to every project.',
+          role: 'Founder',
+          bio: 'Add a short bio for this team member here.',
         },
         {
           photo: '/placeholder-team-2.jpg',
           name: 'Team Member',
-          role: 'Associate Stager',
-          bio: 'Specializing in occupied home staging, our associate stager brings a keen eye for furniture arrangement and accessory curation that makes every room photograph beautifully.',
+          role: 'Role',
+          bio: 'Add a short bio for this team member here.',
         },
         {
           photo: '/placeholder-team-3.jpg',
           name: 'Team Member',
-          role: 'Design Consultant',
-          bio: 'Our design consultant helps clients navigate the consultation process, providing actionable advice and a detailed plan for maximizing their home\'s appeal before listing.',
+          role: 'Role',
+          bio: 'Add a short bio for this team member here.',
         },
       ]
 
