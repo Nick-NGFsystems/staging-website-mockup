@@ -2,65 +2,157 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+  Perrine Interiors — design system
+  Direction: bright, airy, luxury-minimal (REH / Kumara reference).
+  White-dominant, near-black text, sharp lines, generous whitespace.
+  --accent is a placeholder (currently charcoal) — swap to Melissa's brand
+  accent in one place when she provides it.
+*/
 :root {
-  --bg: #f5f2ed;
+  --bg: #ffffff;          /* main background — white */
+  --bg-alt: #f6f4f1;      /* subtle warm off-white for alternating sections */
   --surface: #ffffff;
-  --ink: #1f1f1f;
-  --muted: #666666;
-  --brand: #2d5b57;
-  --brand-dark: #1f3f3b;
-  --line: #d9d2c8;
-  --radius: 14px;
-  --shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+  --ink: #141414;         /* near-black text */
+  --ink-soft: #2c2c2c;
+  --muted: #6f6f6f;
+  --line: #e7e4df;        /* hairline borders */
+  --accent: #141414;      /* PLACEHOLDER accent — swap when brand color arrives */
+  --accent-ink: #ffffff;  /* text on accent */
+  --radius: 3px;          /* near-sharp lines */
+  /* layered shadows read as real depth rather than a single flat blur */
+  --shadow-sm: 0 1px 2px rgba(20,20,20,0.04), 0 4px 12px rgba(20,20,20,0.05);
+  --shadow: 0 6px 16px -6px rgba(20,20,20,0.12), 0 12px 32px -10px rgba(20,20,20,0.10);
+  --shadow-lg: 0 28px 70px -28px rgba(20,20,20,0.30);
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+::selection { background: var(--ink); color: #fff; }
 
 * { box-sizing: border-box; }
 
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden;
+  /* clip (not hidden) so it doesn't create a scroll container that breaks the sticky header */
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 body {
   background: var(--bg);
   color: var(--ink);
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 h1, h2, h3, h4 {
   font-family: var(--font-playfair), Georgia, serif;
-  line-height: 1.2;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  font-weight: 500;
+}
+
+/* Letter-spaced uppercase eyebrow/label */
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--muted);
 }
 
 :focus-visible {
-  outline: 2px solid var(--brand);
-  outline-offset: 2px;
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 
 .skip-link {
   position: fixed;
   top: -100px;
   left: 1rem;
-  z-index: 100;
-  border-radius: 9999px;
-  background: var(--brand);
+  z-index: 200;
+  border-radius: var(--radius);
+  background: var(--ink);
   color: #fff;
   padding: 0.5rem 1rem;
   font-weight: 600;
-  transition: top 0.2s ease;
+  transition: top 0.2s var(--ease);
 }
 .skip-link:focus { top: 0.75rem; }
 
-/* ── Scrolling testimonial marquee ── */
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+/* Editorial buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 48px;
+  padding: 0 1.6rem;
+  border-radius: var(--radius);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: background 0.2s var(--ease), color 0.2s var(--ease), border-color 0.2s var(--ease);
+  cursor: pointer;
 }
-.marquee-track {
-  display: flex;
-  width: max-content;
-  animation: marquee 28s linear infinite;
+.btn-solid { background: var(--accent); color: var(--accent-ink); border: 1px solid var(--accent); }
+.btn-solid:hover { background: #000; border-color: #000; }
+.btn-outline { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
+.btn-outline:hover { background: var(--ink); color: #fff; }
+.btn-ghost-light { background: rgba(255,255,255,0.12); color: #fff; border: 1px solid rgba(255,255,255,0.55); }
+.btn-ghost-light:hover { background: #fff; color: var(--ink); }
+
+/* Hero carousel cross-fade */
+.carousel-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.1s var(--ease);
 }
-@media (max-width: 820px) {
-  .marquee-track { animation: none; overflow-x: auto; }
+.carousel-slide[data-active="true"] { opacity: 1; }
+
+/* Reveal-on-scroll (progressive enhancement) */
+.reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+.reveal.is-visible { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .carousel-slide { transition: none; }
 }
+
+/* Thin uppercase nav link underline animation */
+.nav-link { position: relative; }
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: -4px;
+  height: 1px; width: 0;
+  background: currentColor;
+  transition: width 0.25s var(--ease);
+}
+.nav-link:hover::after, .nav-link[data-active="true"]::after { width: 100%; }
+
+/* Soft elevation + subtle lift on hover — adds depth to flat white cards */
+.elevate {
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.35s var(--ease), transform 0.35s var(--ease);
+}
+.elevate:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
+@media (prefers-reduced-motion: reduce) {
+  .elevate:hover { transform: none; }
+}
+
+/* Crisp hairline frame over images (pseudo-element so it never fights a
+   container's own shadow, and follows the container's border-radius). */
+.framed { position: relative; }
+.framed::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px rgba(20, 20, 20, 0.09);
+  pointer-events: none;
+}
+
+/* Short centered accent rule under a section heading */
+.heading-rule { display: block; width: 2.5rem; height: 1px; background: var(--ink); margin: 1.25rem auto 0; }

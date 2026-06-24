@@ -1,253 +1,83 @@
-'use client'
+import { getNgfContent } from '@/lib/ngf'
+import { SocialLinks } from '@/components/Socials'
+import ContactForm from './ContactForm'
 
-import { useState } from 'react'
+export const metadata = {
+  title: 'Contact',
+  description: 'Request a staging proposal or book a home edit consultation with Perrine Interiors.',
+}
 
-type Tab = 'general' | 'consultation' | 'evaluation'
-type FormStatus = 'idle' | 'submitting' | 'success' | 'error'
-
-const INPUT_CLASS = 'w-full border border-[#cfc7bb] rounded-[10px] px-3 py-2.5 font-sans text-base bg-white focus:outline-none focus:border-[var(--brand)]'
-const LABEL_CLASS = 'flex flex-col gap-1.5 text-[0.92rem] text-[#3a3a3a]'
-
-export default function ContactPage() {
-  const [activeTab, setActiveTab] = useState<Tab>('general')
-  const [status, setStatus] = useState<FormStatus>('idle')
-  const [errorMessage, setErrorMessage] = useState('')
-
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    setStatus('submitting')
-    setErrorMessage('')
-
-    const form = e.currentTarget
-    const data: Record<string, string> = {}
-    const elements = form.elements as HTMLFormControlsCollection
-    for (let i = 0; i < elements.length; i++) {
-      const el = elements[i] as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-      if (el.name) data[el.name] = el.value
-    }
-
-    try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      })
-      if (res.ok) {
-        setStatus('success')
-        form.reset()
-      } else {
-        setStatus('error')
-        setErrorMessage('Something went wrong. Please try again or email us directly.')
-      }
-    } catch {
-      setStatus('error')
-      setErrorMessage('Network error. Please check your connection and try again.')
-    }
-  }
-
-  const tabs: { id: Tab; label: string }[] = [
-    { id: 'general', label: 'General Inquiry' },
-    { id: 'consultation', label: 'Consultation' },
-    { id: 'evaluation', label: 'Home Evaluation' },
-  ]
+export default async function ContactPage() {
+  const content = await getNgfContent()
+  const phone = content['brand.phone'] || '(616) 555-0100'
+  const email = content['brand.email'] || 'hello@perineinteriors.com'
 
   return (
-    <main id="main-content">
-      {/* ── Hero ── */}
-      <section
-        className="relative min-h-[42vh] bg-cover bg-center flex items-center text-white"
-        style={{ backgroundImage: "url('/placeholder-hero.jpg')" }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-[rgba(12,28,25,0.8)] to-[rgba(12,28,25,0.25)]" />
-        <div className="relative z-10 mx-auto w-full max-w-[1120px] px-4 max-w-[760px]">
-          <p
-            className="inline-block text-[0.82rem] tracking-[0.08em] uppercase text-[#f5d9a6] mb-3"
-            data-ngf-field="contact.heroEyebrow"
-            data-ngf-label="Eyebrow"
-            data-ngf-type="text"
-            data-ngf-section="Page Hero"
-          >
-            Contact
-          </p>
-          <h1
-            className="font-serif text-[clamp(2rem,4vw,3.5rem)]"
-            data-ngf-field="contact.heroHeadline"
-            data-ngf-label="Headline"
-            data-ngf-type="text"
-            data-ngf-section="Page Hero"
-          >
-            Get In Touch
+    <>
+      {/* Hero (white, so the tinted form section below floats) */}
+      <section className="bg-white">
+        <div className="mx-auto max-w-[1200px] px-5 pt-24 pb-14 md:pt-28 md:pb-16 text-center">
+          <p className="eyebrow mb-5">Get In Touch</p>
+          <h1 className="font-serif text-[clamp(2.4rem,5vw,3.8rem)] leading-tight mb-5" data-ngf-field="contact.heroHeadline" data-ngf-label="Headline" data-ngf-type="text" data-ngf-section="Page Hero">
+            {content['contact.heroHeadline'] || 'Let’s talk about your home'}
           </h1>
+          <p className="text-muted max-w-[560px] mx-auto text-[1.05rem]" data-ngf-field="contact.heroBody" data-ngf-label="Body" data-ngf-type="textarea" data-ngf-section="Page Hero">
+            {content['contact.heroBody'] || 'Request a staging proposal or book a home edit consultation — we respond within 1–2 business days.'}
+          </p>
         </div>
       </section>
 
-      {/* ── Form Section ── */}
-      <section className="py-16 md:py-24">
-        <div className="mx-auto max-w-[1120px] px-4">
-          <div className="max-w-[680px] mx-auto">
-            {/* Tab Switcher */}
-            <div className="flex flex-wrap gap-2 mb-8" role="tablist" aria-label="Contact form type">
-              {tabs.map((tab) => (
-                <button
-                  key={tab.id}
-                  role="tab"
-                  aria-selected={activeTab === tab.id}
-                  onClick={() => { setActiveTab(tab.id); setStatus('idle') }}
-                  className={`px-5 py-2.5 rounded-full text-sm font-medium border transition-colors min-h-[44px] ${
-                    activeTab === tab.id
-                      ? 'bg-[var(--brand)] border-[var(--brand)] text-white'
-                      : 'bg-white border-[var(--line)] text-[var(--ink)] hover:border-[var(--brand)] hover:text-[var(--brand)]'
-                  }`}
+      {/* Form + layered image */}
+      <section className="bg-bg-alt">
+        <div className="mx-auto max-w-[1140px] px-5 py-16 md:py-24 grid lg:grid-cols-[1.5fr_1fr] gap-8 lg:gap-10 items-start">
+          {/* Elevated form card */}
+          <div className="bg-white rounded-[3px] border border-line/70 shadow-[var(--shadow-lg)] p-6 sm:p-9 md:p-11">
+            <ContactForm />
+          </div>
+
+          {/* Image column — static stacked composition that fills the column height */}
+          <div className="hidden lg:flex flex-col gap-3">
+            {/* Main photo — fixed height; carries the direct-contact overlay */}
+            <div className="relative h-[360px] rounded-[3px] overflow-hidden shadow-[var(--shadow-lg)]">
+              <img src="/images/staged/staged-18.webp" alt="" className="absolute inset-0 w-full h-full object-cover" aria-hidden="true" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 p-8 text-white">
+                <p className="eyebrow !text-white/70 mb-3">Prefer to talk?</p>
+                <a
+                  href={`tel:${phone.replace(/[^\d+]/g, '')}`}
+                  className="font-serif text-[1.9rem] leading-none hover:opacity-80 transition-opacity"
+                  data-ngf-field="brand.phone"
+                  data-ngf-label="Phone"
+                  data-ngf-type="text"
+                  data-ngf-section="Brand"
                 >
-                  {tab.label}
-                </button>
-              ))}
+                  {phone}
+                </a>
+                <a
+                  href={`mailto:${email}`}
+                  className="block text-white/80 text-sm mt-3 hover:text-white transition-colors"
+                  data-ngf-field="brand.email"
+                  data-ngf-label="Email"
+                  data-ngf-type="text"
+                  data-ngf-section="Brand"
+                >
+                  {email}
+                </a>
+                <div className="mt-6">
+                  <SocialLinks gap="gap-4" linkClass="w-5 h-5 text-white/70 hover:text-white transition-colors" />
+                </div>
+              </div>
             </div>
 
-            {/* Success State */}
-            {status === 'success' && (
-              <div className="bg-[var(--brand)]/10 border border-[var(--brand)]/30 rounded-[14px] p-6 mb-8 text-center">
-                <p className="text-[var(--brand)] font-semibold text-lg mb-1">Message Sent!</p>
-                <p className="text-[var(--muted)] text-sm">Thank you for reaching out. Melissa will be in touch within one business day.</p>
-                <button
-                  onClick={() => setStatus('idle')}
-                  className="mt-4 inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-[var(--brand)] text-white text-sm font-semibold hover:bg-[var(--brand-dark)] transition-colors min-h-[44px]"
-                >
-                  Send Another Message
-                </button>
-              </div>
-            )}
-
-            {/* Error State */}
-            {status === 'error' && (
-              <div className="bg-red-50 border border-red-200 rounded-[14px] p-4 mb-6">
-                <p className="text-red-700 text-sm">{errorMessage}</p>
-              </div>
-            )}
-
-            {/* Forms */}
-            {status !== 'success' && (
-              <>
-                {/* General Inquiry Form */}
-                {activeTab === 'general' && (
-                  <form onSubmit={handleSubmit} className="bg-white border border-[var(--line)] rounded-[14px] p-8 shadow-[0_12px_28px_rgba(0,0,0,0.08)] space-y-5">
-                    <input type="hidden" name="submission_type" value="General Inquiry" />
-                    <label className={LABEL_CLASS}>
-                      Name <span className="text-red-500">*</span>
-                      <input type="text" name="name" required placeholder="Your full name" className={INPUT_CLASS} />
-                    </label>
-                    <label className={LABEL_CLASS}>
-                      Email <span className="text-red-500">*</span>
-                      <input type="email" name="email" required placeholder="your@email.com" className={INPUT_CLASS} />
-                    </label>
-                    <label className={LABEL_CLASS}>
-                      Phone
-                      <input type="tel" name="phone" placeholder="(616) 555-0100" className={INPUT_CLASS} />
-                    </label>
-                    <label className={LABEL_CLASS}>
-                      Message
-                      <textarea name="message" rows={5} placeholder="How can we help?" className={INPUT_CLASS} />
-                    </label>
-                    <button
-                      type="submit"
-                      disabled={status === 'submitting'}
-                      className="w-full inline-flex items-center justify-center px-6 py-3 rounded-full bg-[var(--brand)] text-white font-semibold hover:bg-[var(--brand-dark)] transition-colors min-h-[44px] disabled:opacity-60"
-                    >
-                      {status === 'submitting' ? 'Sending…' : 'Send Message'}
-                    </button>
-                  </form>
-                )}
-
-                {/* Consultation Form */}
-                {activeTab === 'consultation' && (
-                  <form onSubmit={handleSubmit} className="bg-white border border-[var(--line)] rounded-[14px] p-8 shadow-[0_12px_28px_rgba(0,0,0,0.08)] space-y-5">
-                    <input type="hidden" name="submission_type" value="Consultation" />
-                    <label className={LABEL_CLASS}>
-                      Name <span className="text-red-500">*</span>
-                      <input type="text" name="name" required placeholder="Your full name" className={INPUT_CLASS} />
-                    </label>
-                    <label className={LABEL_CLASS}>
-                      Email <span className="text-red-500">*</span>
-                      <input type="email" name="email" required placeholder="your@email.com" className={INPUT_CLASS} />
-                    </label>
-                    <label className={LABEL_CLASS}>
-                      Phone
-                      <input type="tel" name="phone" placeholder="(616) 555-0100" className={INPUT_CLASS} />
-                    </label>
-                    <label className={LABEL_CLASS}>
-                      Home Address
-                      <input type="text" name="address" placeholder="123 Main St, Grand Rapids, MI" className={INPUT_CLASS} />
-                    </label>
-                    <label className={LABEL_CLASS}>
-                      Message
-                      <textarea name="message" rows={5} placeholder="Tell us a bit about your home and your timeline." className={INPUT_CLASS} />
-                    </label>
-                    <button
-                      type="submit"
-                      disabled={status === 'submitting'}
-                      className="w-full inline-flex items-center justify-center px-6 py-3 rounded-full bg-[var(--brand)] text-white font-semibold hover:bg-[var(--brand-dark)] transition-colors min-h-[44px] disabled:opacity-60"
-                    >
-                      {status === 'submitting' ? 'Sending…' : 'Book Consultation'}
-                    </button>
-                  </form>
-                )}
-
-                {/* Home Evaluation Form */}
-                {activeTab === 'evaluation' && (
-                  <form onSubmit={handleSubmit} className="bg-white border border-[var(--line)] rounded-[14px] p-8 shadow-[0_12px_28px_rgba(0,0,0,0.08)] space-y-5">
-                    <input type="hidden" name="submission_type" value="Home Evaluation" />
-                    <label className={LABEL_CLASS}>
-                      Name <span className="text-red-500">*</span>
-                      <input type="text" name="name" required placeholder="Your full name" className={INPUT_CLASS} />
-                    </label>
-                    <label className={LABEL_CLASS}>
-                      Email <span className="text-red-500">*</span>
-                      <input type="email" name="email" required placeholder="your@email.com" className={INPUT_CLASS} />
-                    </label>
-                    <label className={LABEL_CLASS}>
-                      Phone
-                      <input type="tel" name="phone" placeholder="(616) 555-0100" className={INPUT_CLASS} />
-                    </label>
-                    <label className={LABEL_CLASS}>
-                      Property Address
-                      <input type="text" name="address" placeholder="123 Main St, Grand Rapids, MI" className={INPUT_CLASS} />
-                    </label>
-                    <label className={LABEL_CLASS}>
-                      Approx. List Price
-                      <select name="list_price" className={INPUT_CLASS}>
-                        <option value="">Select a range…</option>
-                        <option value="$250K–$500K">$250K–$500K</option>
-                        <option value="$500K–$1M">$500K–$1M</option>
-                        <option value="$1M–$2M">$1M–$2M</option>
-                      </select>
-                    </label>
-                    <label className={LABEL_CLASS}>
-                      Desired Timeline
-                      <select name="timeline" className={INPUT_CLASS}>
-                        <option value="">Select a timeline…</option>
-                        <option value="ASAP">ASAP</option>
-                        <option value="1–3 months">1–3 months</option>
-                        <option value="3–6 months">3–6 months</option>
-                      </select>
-                    </label>
-                    <label className={LABEL_CLASS}>
-                      Additional Notes
-                      <textarea name="notes" rows={5} placeholder="Any additional context about the property or your needs." className={INPUT_CLASS} />
-                    </label>
-                    <button
-                      type="submit"
-                      disabled={status === 'submitting'}
-                      className="w-full inline-flex items-center justify-center px-6 py-3 rounded-full bg-[var(--brand)] text-white font-semibold hover:bg-[var(--brand-dark)] transition-colors min-h-[44px] disabled:opacity-60"
-                    >
-                      {status === 'submitting' ? 'Sending…' : 'Submit Evaluation Request'}
-                    </button>
-                  </form>
-                )}
-              </>
-            )}
+            {/* Secondary photo fills the lower space + a small overlaid line */}
+            <div className="relative h-[210px] rounded-[3px] overflow-hidden shadow-[var(--shadow)]">
+              <img src="/images/staged/staged-02.webp" alt="" className="absolute inset-0 w-full h-full object-cover" aria-hidden="true" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/55 to-transparent" />
+              <p className="absolute bottom-5 left-6 font-serif text-white text-lg">Staging that sells.</p>
+            </div>
           </div>
         </div>
       </section>
-    </main>
+    </>
   )
 }

@@ -4,6 +4,7 @@ import NgfEditBridge from '@/components/NgfEditBridge'
 import { getNgfContent } from '@/lib/ngf'
 import { PageChrome } from '@/components/layout/PageChrome'
 import './globals.css'
+import 'react-photo-view/dist/react-photo-view.css'
 
 const inter = Inter({
   variable: '--font-inter',

@@ -1,134 +1,110 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import { PhotoProvider, PhotoView } from 'react-photo-view'
-import 'react-photo-view/dist/react-photo-view.css'
 
-export type ShowcaseProject = {
-  title: string
-  description: string
-  category: string
-  image: string
-}
+export type Project = { image: string; title: string; environment: string; description: string; image_alt?: string }
+export type GalleryPhoto = { image: string; image_alt?: string }
 
-export type GalleryPhoto = {
-  image: string
-  caption: string
-}
+const FILTERS = ['All', 'For Sale', 'Existing Space', 'New Construction']
+const slug = (s: string) => s.toLowerCase().replace(/[^a-z]+/g, '-').replace(/(^-|-$)/g, '')
 
-const FILTERS = ['All', 'New Construction', '$250K–$500K', '$500K–$1M', '$1M–$2M']
+export default function ShowcaseGrid({ projects, gallery }: { projects: Project[]; gallery: GalleryPhoto[] }) {
+  const [active, setActive] = useState('All')
 
-export default function ShowcaseGrid({
-  projects,
-  gallery,
-}: {
-  projects: ShowcaseProject[]
-  gallery: GalleryPhoto[]
-}) {
-  const [activeFilter, setActiveFilter] = useState('All')
+  // Deep-link from the home environment tiles (/showcase#for-sale, etc.)
+  useEffect(() => {
+    const h = decodeURIComponent(window.location.hash.replace('#', ''))
+    const match = FILTERS.find((f) => slug(f) === h)
+    if (match) setActive(match)
+  }, [])
 
   return (
     <>
-      {/* ── Featured Projects ── */}
-      <section className="py-16 md:py-24">
-        <div className="mx-auto max-w-[1120px] px-4">
-          {/* Filter Buttons */}
-          <div className="flex flex-wrap gap-2 justify-center mb-12" role="group" aria-label="Filter projects">
-            {FILTERS.map((filter) => (
+      {/* Filter */}
+      <section className="pt-4">
+        <div className="mx-auto max-w-[1200px] px-5">
+          <div className="flex flex-wrap gap-2 justify-center border-b border-line pb-8" role="group" aria-label="Filter by environment">
+            {FILTERS.map((f) => (
               <button
-                key={filter}
-                onClick={() => setActiveFilter(filter)}
-                className={`px-5 py-2.5 rounded-full text-sm font-medium border transition-colors min-h-[44px] ${
-                  activeFilter === filter
-                    ? 'bg-[var(--brand)] border-[var(--brand)] text-white'
-                    : 'bg-white border-[var(--line)] text-[var(--ink)] hover:border-[var(--brand)] hover:text-[var(--brand)]'
+                key={f}
+                onClick={() => setActive(f)}
+                className={`px-5 py-2.5 text-[0.78rem] font-semibold uppercase tracking-[0.1em] border transition-colors rounded-[2px] ${
+                  active === f ? 'bg-ink text-white border-ink' : 'bg-white border-line text-ink hover:border-ink'
                 }`}
               >
-                {filter}
+                {f}
               </button>
             ))}
           </div>
+        </div>
+      </section>
 
-          {/* Project Cards — always render every card (stable group indices);
-              filtering only toggles visibility so the portal editor's
-              add/reorder/delete stay aligned with the canonical paths. */}
+      {/* Projects */}
+      <section className="py-14 md:py-20">
+        <div className="mx-auto max-w-[1200px] px-5">
           <div
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3"
             data-ngf-group="showcase.projects"
             data-ngf-item-label="Project"
             data-ngf-min-items="1"
-            data-ngf-max-items="24"
-            data-ngf-item-fields='[{"key":"image","label":"Photo","type":"image","aspect":"3:2"},{"key":"title","label":"Project Title","type":"text"},{"key":"category","label":"Category","type":"text"},{"key":"description","label":"Description","type":"textarea"}]'
+            data-ngf-max-items="36"
+            data-ngf-item-fields='[{"key":"image","label":"Photo","type":"image","aspect":"3:2"},{"key":"title","label":"Title","type":"text"},{"key":"environment","label":"Environment","type":"text"},{"key":"description","label":"Description","type":"textarea"}]'
           >
-            {projects.map((project, i) => {
-              const hidden = activeFilter !== 'All' && project.category !== activeFilter
+            {projects.map((p, i) => {
+              const hidden = active !== 'All' && p.environment !== active
               return (
-                <div
-                  key={i}
-                  data-category={project.category}
-                  className={`bg-white border border-[var(--line)] rounded-[14px] overflow-hidden shadow-[0_12px_28px_rgba(0,0,0,0.08)] ${hidden ? 'hidden' : ''}`}
-                >
-                  <img
-                    src={project.image || '/images/staged/staged-15.webp'}
-                    alt={project.title || `Staged project ${i + 1}`}
-                    className="w-full aspect-[3/2] object-cover"
-                    data-ngf-field={`showcase.projects.${i}.image`}
-                    data-ngf-label="Photo"
-                    data-ngf-type="image"
-                    data-ngf-section="Showcase Portfolio"
-                    data-ngf-aspect="3:2"
-                  />
+                <article key={i} className={`bg-white border border-line elevate ${hidden ? 'hidden' : ''}`}>
+                  <div className="aspect-[3/2] overflow-hidden">
+                    <img
+                      src={p.image}
+                      alt={p.image_alt || p.title || `Staged project ${i + 1}`}
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                      data-ngf-field={`showcase.projects.${i}.image`}
+                      data-ngf-label="Photo"
+                      data-ngf-type="image"
+                      data-ngf-section="Showcase"
+                      data-ngf-aspect="3:2"
+                    />
+                  </div>
                   <div className="p-5">
-                    <div className="flex items-start justify-between gap-2 mb-2">
-                      <h3
-                        className="font-serif text-lg leading-snug"
-                        data-ngf-field={`showcase.projects.${i}.title`}
-                        data-ngf-label="Project Title"
-                        data-ngf-type="text"
-                        data-ngf-section="Showcase Portfolio"
-                      >
-                        {project.title}
+                    <div className="flex items-center justify-between gap-3 mb-2">
+                      <h3 className="font-serif text-lg" data-ngf-field={`showcase.projects.${i}.title`} data-ngf-label="Title" data-ngf-type="text" data-ngf-section="Showcase">
+                        {p.title}
                       </h3>
                       <span
-                        className={`flex-shrink-0 text-[0.7rem] uppercase tracking-wider rounded-full font-semibold ${project.category ? 'bg-[var(--brand)]/10 text-[var(--brand)] px-2.5 py-1' : ''}`}
-                        data-ngf-field={`showcase.projects.${i}.category`}
-                        data-ngf-label="Category"
+                        className={`flex-shrink-0 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-muted ${p.environment ? '' : 'opacity-0'}`}
+                        data-ngf-field={`showcase.projects.${i}.environment`}
+                        data-ngf-label="Environment"
                         data-ngf-type="text"
-                        data-ngf-section="Showcase Portfolio"
+                        data-ngf-section="Showcase"
                       >
-                        {project.category}
+                        {p.environment}
                       </span>
                     </div>
-                    <p
-                      className="text-[var(--muted)] text-sm leading-relaxed"
-                      data-ngf-field={`showcase.projects.${i}.description`}
-                      data-ngf-label="Description"
-                      data-ngf-type="textarea"
-                      data-ngf-section="Showcase Portfolio"
-                    >
-                      {project.description}
+                    <p className="text-sm text-muted leading-relaxed" data-ngf-field={`showcase.projects.${i}.description`} data-ngf-label="Description" data-ngf-type="textarea" data-ngf-section="Showcase">
+                      {p.description}
                     </p>
                   </div>
-                </div>
+                </article>
               )
             })}
           </div>
-
-          {projects.every((p) => activeFilter !== 'All' && p.category !== activeFilter) && (
-            <p className="text-center text-[var(--muted)] py-16">No projects in this category yet.</p>
+          {projects.every((p) => active !== 'All' && p.environment !== active) && (
+            <p className="text-center text-muted py-16">No projects in this category yet.</p>
           )}
         </div>
       </section>
 
-      {/* ── Full Gallery (lightbox) ── */}
-      <section className="pb-16 md:pb-24">
-        <div className="mx-auto max-w-[1120px] px-4">
-          <h2 className="font-serif text-[clamp(1.6rem,3vw,2.4rem)] text-center mb-3">
-            More Staged Spaces
-          </h2>
-          <p className="text-center text-[var(--muted)] max-w-[520px] mx-auto mb-10">
-            Tap any photo to view it full screen.
-          </p>
+      {/* Gallery */}
+      <section className="pb-24 md:pb-32">
+        <div className="mx-auto max-w-[1200px] px-5">
+          <div className="text-center mb-12">
+            <p className="eyebrow mb-4">The Full Collection</p>
+            <h2 className="font-serif text-[clamp(1.6rem,3vw,2.4rem)]">Browse every staged space</h2>
+            <p className="text-muted mt-3">Tap any photo to view it full screen.</p>
+          </div>
           <PhotoProvider>
             <div
               className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3"
@@ -138,12 +114,12 @@ export default function ShowcaseGrid({
               data-ngf-max-items="60"
               data-ngf-item-fields='[{"key":"image","label":"Photo","type":"image","aspect":"3:2"}]'
             >
-              {gallery.map((photo, i) => (
-                <PhotoView key={i} src={photo.image}>
+              {gallery.map((g, i) => (
+                <PhotoView key={i} src={g.image}>
                   <img
-                    src={photo.image}
-                    alt={photo.caption || `Staged space ${i + 1}`}
-                    className="w-full aspect-[3/2] object-cover rounded-[10px] cursor-zoom-in"
+                    src={g.image}
+                    alt={g.image_alt || `Staged space ${i + 1}`}
+                    className="w-full aspect-[3/2] object-cover cursor-zoom-in ring-1 ring-inset ring-black/[0.08]"
                     data-ngf-field={`showcase.gallery.${i}.image`}
                     data-ngf-label="Photo"
                     data-ngf-type="image"
@@ -154,6 +130,9 @@ export default function ShowcaseGrid({
               ))}
             </div>
           </PhotoProvider>
+          <p className="text-center mt-12">
+            <Link href="/contact" className="btn btn-solid">Start Your Project</Link>
+          </p>
         </div>
       </section>
     </>

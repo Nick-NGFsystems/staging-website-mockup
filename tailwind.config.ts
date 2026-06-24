@@ -9,11 +9,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        brand: 'var(--brand)',
-        'brand-dark': 'var(--brand-dark)',
+        accent: 'var(--accent)',
+        'accent-ink': 'var(--accent-ink)',
         bg: 'var(--bg)',
+        'bg-alt': 'var(--bg-alt)',
         surface: 'var(--surface)',
         ink: 'var(--ink)',
+        'ink-soft': 'var(--ink-soft)',
         muted: 'var(--muted)',
         line: 'var(--line)',
       },

@@ -28,7 +28,7 @@ export function PageChrome({ content, children }: Props) {
       <button
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         aria-label="Back to top"
-        className={`fixed right-4 bottom-4 w-11 h-11 rounded-full bg-[var(--brand)] text-white text-xl flex items-center justify-center shadow-lg transition-all duration-250 ${
+        className={`fixed right-5 bottom-5 z-40 w-11 h-11 rounded-full bg-ink text-white text-lg flex items-center justify-center shadow-lg transition-all duration-300 hover:bg-accent ${
           showBackToTop ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-2 pointer-events-none'
         }`}
       >

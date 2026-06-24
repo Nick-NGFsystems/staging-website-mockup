@@ -1,163 +1,82 @@
-import { getNgfContent } from '@/lib/ngf'
-
-export const dynamic = 'force-dynamic'
+import { getNgfContent, getItems } from '@/lib/ngf'
+import Link from 'next/link'
 
 export const metadata = {
-  title: 'Staging Services',
-  description: 'Professional home staging services for occupied, vacant, and new construction homes in West Michigan.',
+  title: 'Home Staging',
+  description: 'Professional home staging for for-sale listings, existing spaces, and new construction across West Michigan.',
 }
+
+const DEFAULT_PROCESS = [
+  { title: 'On-Site Visit & Quote', body: 'We walk the home, discuss goals and timeline, and provide a clear, written proposal.' },
+  { title: 'Planning & Sourcing', body: 'We design the look and pull furniture and accessories from our inventory.' },
+  { title: 'Install Day', body: 'Our team stages the home — most installs are completed in a single day.' },
+  { title: 'Listing-Ready', body: 'The home is ready for photos and showings, looking its absolute best.' },
+]
+
+const DEFAULT_FAQ = [
+  { q: 'How long does staging take?', a: 'Add your answer here.' },
+  { q: 'What does staging cost?', a: 'Add your answer here.' },
+  { q: 'Do you stage occupied homes?', a: 'Add your answer here.' },
+]
 
 export default async function StagingPage() {
   const content = await getNgfContent()
+  const process = (() => { const i = getItems(content, 'staging.process'); return i.length > 0 ? i : DEFAULT_PROCESS })()
+  const faq = (() => { const i = getItems(content, 'staging.faq'); return i.length > 0 ? i : DEFAULT_FAQ })()
 
   return (
-    <main id="main-content">
-      {/* ── Hero ── */}
-      <section
-        className="relative min-h-[42vh] bg-cover bg-center flex items-center text-white"
-        style={{ backgroundImage: `url('${content['staging.heroImage'] || '/placeholder-hero.jpg'}')` }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-[rgba(12,28,25,0.8)] to-[rgba(12,28,25,0.25)]" />
-        <div className="relative z-10 mx-auto w-full max-w-[1120px] px-4 max-w-[760px]">
-          <p
-            className="inline-block text-[0.82rem] tracking-[0.08em] uppercase text-[#f5d9a6] mb-3"
-            data-ngf-field="staging.heroEyebrow"
-            data-ngf-label="Eyebrow"
-            data-ngf-type="text"
-            data-ngf-section="Page Hero"
-          >
-            {content['staging.heroEyebrow'] || 'Staging'}
-          </p>
-          <h1
-            className="font-serif text-[clamp(2rem,4vw,3.5rem)]"
-            data-ngf-field="staging.heroHeadline"
-            data-ngf-label="Headline"
-            data-ngf-type="text"
-            data-ngf-section="Page Hero"
-          >
-            {content['staging.heroHeadline'] || 'Why Staging Matters'}
+    <>
+      <section className="bg-bg-alt">
+        <div className="mx-auto max-w-[1200px] px-5 pt-24 pb-14 md:pt-32 md:pb-16 text-center">
+          <p className="eyebrow mb-5">Home Staging</p>
+          <h1 className="font-serif text-[clamp(2.4rem,5vw,3.8rem)] leading-tight" data-ngf-field="staging.heroHeadline" data-ngf-label="Headline" data-ngf-type="text" data-ngf-section="Page Hero">
+            {content['staging.heroHeadline'] || 'Why staging works'}
           </h1>
-        </div>
-      </section>
-
-      {/* ── Intro + 3 Info Cards ── */}
-      <section className="py-16 md:py-24">
-        <div className="mx-auto max-w-[1120px] px-4">
-          <p
-            className="text-[1.05rem] text-[var(--muted)] max-w-[680px] mx-auto text-center mb-16 leading-relaxed"
-            data-ngf-field="staging.overviewCopy"
-            data-ngf-label="Overview Copy"
-            data-ngf-type="textarea"
-            data-ngf-section="Staging Overview"
-          >
-            {content['staging.overviewCopy'] || 'Staging is one of the most powerful tools sellers have. Professionally staged homes photograph better, show better, and sell faster — often for more money. Whether your home is occupied, vacant, or brand-new construction, Perrine Interiors brings expertise, inventory, and vision to every listing.'}
+          <p className="text-muted max-w-[620px] mx-auto mt-5 text-[1.05rem]" data-ngf-field="staging.heroBody" data-ngf-label="Body" data-ngf-type="textarea" data-ngf-section="Page Hero">
+            {content['staging.heroBody'] || 'A well-presented home helps buyers form an emotional connection — and that connection translates into stronger offers.'}
           </p>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {/* Why Staging */}
-            <div className="bg-white border border-[var(--line)] rounded-[14px] p-6 shadow-[0_12px_28px_rgba(0,0,0,0.08)]">
-              <div className="w-10 h-10 rounded-full bg-[var(--brand)] flex items-center justify-center mb-4">
-                <span className="text-white font-bold text-sm">1</span>
-              </div>
-              <h3
-                className="font-serif text-xl mb-3"
-                data-ngf-field="staging.card1Title"
-                data-ngf-label="Card 1 Title"
-                data-ngf-type="text"
-                data-ngf-section="Staging Info Cards"
-              >
-                {content['staging.card1Title'] || 'Why Stage?'}
-              </h3>
-              <p
-                className="text-[var(--muted)] text-sm leading-relaxed"
-                data-ngf-field="staging.card1Body"
-                data-ngf-label="Card 1 Body"
-                data-ngf-type="textarea"
-                data-ngf-section="Staging Info Cards"
-              >
-                {content['staging.card1Body'] || 'A well-presented home helps buyers form an emotional connection to the space — and that connection translates directly into stronger offers.'}
-              </p>
-            </div>
-
-            {/* Timeline */}
-            <div className="bg-white border border-[var(--line)] rounded-[14px] p-6 shadow-[0_12px_28px_rgba(0,0,0,0.08)]">
-              <div className="w-10 h-10 rounded-full bg-[var(--brand)] flex items-center justify-center mb-4">
-                <span className="text-white font-bold text-sm">2</span>
-              </div>
-              <h3
-                className="font-serif text-xl mb-3"
-                data-ngf-field="staging.card2Title"
-                data-ngf-label="Card 2 Title"
-                data-ngf-type="text"
-                data-ngf-section="Staging Info Cards"
-              >
-                {content['staging.card2Title'] || 'Our Timeline'}
-              </h3>
-              <p
-                className="text-[var(--muted)] text-sm leading-relaxed"
-                data-ngf-field="staging.card2Body"
-                data-ngf-label="Card 2 Body"
-                data-ngf-type="textarea"
-                data-ngf-section="Staging Info Cards"
-              >
-                {content['staging.card2Body'] || 'Consultation → Planning & Sourcing → Install Day → Listing Photos → Results. Most installs are completed in one day. We work around your photographer\'s schedule and listing timeline.'}
-              </p>
-            </div>
-
-            {/* What to Expect */}
-            <div className="bg-white border border-[var(--line)] rounded-[14px] p-6 shadow-[0_12px_28px_rgba(0,0,0,0.08)]">
-              <div className="w-10 h-10 rounded-full bg-[var(--brand)] flex items-center justify-center mb-4">
-                <span className="text-white font-bold text-sm">3</span>
-              </div>
-              <h3
-                className="font-serif text-xl mb-3"
-                data-ngf-field="staging.card3Title"
-                data-ngf-label="Card 3 Title"
-                data-ngf-type="text"
-                data-ngf-section="Staging Info Cards"
-              >
-                {content['staging.card3Title'] || 'What To Expect'}
-              </h3>
-              <p
-                className="text-[var(--muted)] text-sm leading-relaxed"
-                data-ngf-field="staging.card3Body"
-                data-ngf-label="Card 3 Body"
-                data-ngf-type="textarea"
-                data-ngf-section="Staging Info Cards"
-              >
-                {content['staging.card3Body'] || 'Clear communication at every step, detailed proposals before any work begins, and a team that respects your home and your timeline. We handle the heavy lifting — you focus on the move.'}
-              </p>
-            </div>
-          </div>
         </div>
       </section>
 
-      {/* ── Watch Staging Videos ── */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="mx-auto max-w-[1120px] px-4">
-          <h2
-            className="font-serif text-[clamp(1.8rem,3vw,2.75rem)] text-center mb-12"
-            data-ngf-field="staging.videosHeadline"
-            data-ngf-label="Videos Section Headline"
-            data-ngf-type="text"
-            data-ngf-section="Watch Staging Videos"
+      {/* Why */}
+      <section className="py-24 md:py-32">
+        <div className="mx-auto max-w-[900px] px-5 grid md:grid-cols-3 gap-10">
+          {[
+            { t: 'Sell Faster', d: 'Staged homes photograph better and show better, helping listings move sooner.' },
+            { t: 'Stronger Offers', d: 'Buyers connect with a home they can picture themselves living in.' },
+            { t: 'Every Price Point', d: 'Packages tailored to the home — from first listings to luxury new construction.' },
+          ].map((c) => (
+            <div key={c.t}>
+              <h3 className="text-base font-semibold uppercase tracking-[0.08em] mb-3">{c.t}</h3>
+              <p className="text-muted leading-relaxed text-[0.95rem]">{c.d}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Process */}
+      <section id="process" className="py-24 md:py-32 bg-bg-alt scroll-mt-20">
+        <div className="mx-auto max-w-[1200px] px-5">
+          <div className="text-center mb-16">
+            <p className="eyebrow mb-4">What to Expect</p>
+            <h2 className="font-serif text-[clamp(1.8rem,3.5vw,2.9rem)]">Our staging process</h2>
+          </div>
+          <div
+            className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10"
+            data-ngf-group="staging.process"
+            data-ngf-item-label="Step"
+            data-ngf-min-items="1"
+            data-ngf-max-items="8"
+            data-ngf-item-fields='[{"key":"title","label":"Title","type":"text"},{"key":"body","label":"Body","type":"textarea"}]'
           >
-            {content['staging.videosHeadline'] || 'Watch Staging Videos'}
-          </h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            {[0, 1].map((i) => (
-              <div key={i} className="bg-white border border-[var(--line)] rounded-[14px] p-4 shadow-[0_12px_28px_rgba(0,0,0,0.08)]">
-                <div className="aspect-video bg-[var(--brand)]/10 border-2 border-dashed border-[var(--brand)]/40 rounded-[10px] flex items-center justify-center mb-3">
-                  <span className="text-[var(--brand)] text-sm font-medium">Video Embed Placeholder</span>
-                </div>
-                <p
-                  className="font-serif text-base text-center"
-                  data-ngf-field={`staging.videos.${i}.title`}
-                  data-ngf-label="Video Title"
-                  data-ngf-type="text"
-                  data-ngf-section="Watch Staging Videos"
-                >
-                  {content[`staging.videos.${i}.title`] || `Staging Video ${i + 1}`}
+            {process.map((s, i) => (
+              <div key={i}>
+                <span className="block w-10 h-px bg-ink mb-4" aria-hidden="true" />
+                <h3 className="text-[0.95rem] font-semibold uppercase tracking-[0.06em] mb-2" data-ngf-field={`staging.process.${i}.title`} data-ngf-label="Title" data-ngf-type="text" data-ngf-section="Process">
+                  {s.title || `Step ${i + 1}`}
+                </h3>
+                <p className="text-muted leading-relaxed text-[0.9rem]" data-ngf-field={`staging.process.${i}.body`} data-ngf-label="Body" data-ngf-type="textarea" data-ngf-section="Process">
+                  {s.body || ''}
                 </p>
               </div>
             ))}
@@ -165,35 +84,42 @@ export default async function StagingPage() {
         </div>
       </section>
 
-      {/* ── CTA ── */}
-      <section className="py-16 md:py-24 bg-[var(--brand)]">
-        <div className="mx-auto max-w-[1120px] px-4 text-center text-white">
-          <h2
-            className="font-serif text-[clamp(1.8rem,3vw,2.75rem)] mb-4"
-            data-ngf-field="staging.ctaHeadline"
-            data-ngf-label="CTA Headline"
-            data-ngf-type="text"
-            data-ngf-section="Staging CTA"
+      {/* FAQ */}
+      <section id="faq" className="py-24 md:py-32 scroll-mt-20">
+        <div className="mx-auto max-w-[760px] px-5">
+          <div className="text-center mb-14">
+            <p className="eyebrow mb-4">Questions</p>
+            <h2 className="font-serif text-[clamp(1.8rem,3.5vw,2.9rem)]">Frequently asked</h2>
+          </div>
+          <div
+            className="divide-y divide-line border-y border-line"
+            data-ngf-group="staging.faq"
+            data-ngf-item-label="Question"
+            data-ngf-min-items="1"
+            data-ngf-max-items="20"
+            data-ngf-item-fields='[{"key":"q","label":"Question","type":"text"},{"key":"a","label":"Answer","type":"textarea"}]'
           >
-            {content['staging.ctaHeadline'] || 'Let\'s Stage Your Home for Success'}
-          </h2>
-          <p
-            className="text-white/80 text-[1.05rem] max-w-[480px] mx-auto mb-8"
-            data-ngf-field="staging.ctaBody"
-            data-ngf-label="CTA Body"
-            data-ngf-type="textarea"
-            data-ngf-section="Staging CTA"
-          >
-            {content['staging.ctaBody'] || 'Ready to get started? Fill out a quick staging inquiry and we\'ll be in touch within one business day.'}
-          </p>
-          <a
-            href="/contact"
-            className="inline-flex items-center justify-center px-8 py-3.5 rounded-full bg-white text-[var(--brand)] font-semibold hover:bg-[#ece8e0] transition-colors min-h-[44px]"
-          >
-            Book a Staging Inquiry
-          </a>
+            {faq.map((item, i) => (
+              <div key={i} className="py-6">
+                <h3 className="font-serif text-lg mb-2" data-ngf-field={`staging.faq.${i}.q`} data-ngf-label="Question" data-ngf-type="text" data-ngf-section="FAQ">
+                  {item.q || 'Question'}
+                </h3>
+                <p className="text-muted leading-relaxed" data-ngf-field={`staging.faq.${i}.a`} data-ngf-label="Answer" data-ngf-type="textarea" data-ngf-section="FAQ">
+                  {item.a || ''}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
-    </main>
+
+      {/* CTA */}
+      <section className="bg-ink text-white">
+        <div className="mx-auto max-w-[860px] px-5 py-24 text-center">
+          <h2 className="font-serif text-[clamp(2rem,4vw,3rem)] mb-6 text-white">Let&rsquo;s stage your home</h2>
+          <Link href="/contact" className="btn btn-solid !bg-white !text-ink !border-white">Get a Quote</Link>
+        </div>
+      </section>
+    </>
   )
 }
