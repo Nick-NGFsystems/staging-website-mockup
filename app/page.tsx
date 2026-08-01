@@ -1,7 +1,5 @@
 import { getNgfContent, getItems } from '@/lib/ngf'
 
-export const dynamic = 'force-dynamic'
-
 export default async function HomePage() {
   const content = await getNgfContent()
 
