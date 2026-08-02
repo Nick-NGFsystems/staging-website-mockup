@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { Resend } from 'resend'
+import { relayLeadToNgf } from '@/lib/ngf-lead'
 
 const schema = z.object({
   submission_type: z.string(),
@@ -25,6 +26,11 @@ export async function POST(req: NextRequest) {
 
     const body = await req.json() as unknown
     const data = schema.parse(body)
+
+    // Persist FIRST to the central NGF lead store (system of record) so the
+    // enquiry survives an email failure and lands in the client's portal under
+    // Form Submissions. Additive — the email below is unchanged.
+    await relayLeadToNgf(data.submission_type || 'contact', data)
 
     const subject = `New ${data.submission_type} from ${data.name} — Perrine Interiors`
     const html = `

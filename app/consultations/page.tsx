@@ -1,7 +1,5 @@
 import { getNgfContent } from '@/lib/ngf'
 
-export const dynamic = 'force-dynamic'
-
 export const metadata = {
   title: 'Home Edit Consultations',
   description: 'Home edit consultations for sellers who want expert advice on changes to improve sale price and speed.',

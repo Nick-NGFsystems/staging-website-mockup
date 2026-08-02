@@ -1,8 +1,6 @@
 import { getNgfContent, getItems } from '@/lib/ngf'
 import ShowcaseGrid, { type ShowcaseProject, type GalleryPhoto } from './ShowcaseGrid'
 
-export const dynamic = 'force-dynamic'
-
 export const metadata = {
   title: 'Staging Showcase',
   description: 'Browse our portfolio of professionally staged homes across West Michigan — living rooms, kitchens, bedrooms, and more.',

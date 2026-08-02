@@ -1,7 +1,5 @@
 import { getNgfContent } from '@/lib/ngf'
 
-export const dynamic = 'force-dynamic'
-
 export const metadata = {
   title: 'Staging Services',
   description: 'Professional home staging services for occupied, vacant, and new construction homes in West Michigan.',

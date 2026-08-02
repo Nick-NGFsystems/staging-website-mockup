@@ -1,7 +1,5 @@
 import { getNgfContent, getItems } from '@/lib/ngf'
 
-export const dynamic = 'force-dynamic'
-
 export const metadata = {
   title: 'Shop',
   description: 'Browse brand-new furniture and home accessories available for purchase from Perrine Interiors.',
