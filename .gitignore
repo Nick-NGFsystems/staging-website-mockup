@@ -28,3 +28,6 @@ yarn-error.log*
 .vercel
 *.tsbuildinfo
 next-env.d.ts
+
+# Client photo originals — 552 MB of raw source files, never served and never committed.
+photo-originals/
