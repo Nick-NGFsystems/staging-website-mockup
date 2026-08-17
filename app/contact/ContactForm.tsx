@@ -60,7 +60,10 @@ export default function ContactForm() {
       if (el.name && el.value && !(el.type === 'radio' && !el.checked)) data[el.name] = el.value
     }
     // Honeypot — bots fill this hidden field; treat as a silent success.
-    if (data.company) { setStatus('success'); form.reset(); return }
+    // NOTE: the field name must stay non-semantic ("_gotcha"). A name like
+    // "company" gets autofilled by browsers and password managers, which would
+    // silently discard real enquiries.
+    if (data._gotcha) { setStatus('success'); form.reset(); return }
     delete data.consent
     try {
       const res = await fetch('/api/contact', {
@@ -117,7 +120,7 @@ export default function ContactForm() {
 
         {/* Honeypot (hidden from people) */}
         <div aria-hidden="true" className="absolute -left-[9999px] top-auto w-px h-px overflow-hidden">
-          <label>Company<input type="text" name="company" tabIndex={-1} autoComplete="off" /></label>
+          <label>Leave this field empty<input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" /></label>
         </div>
 
         <SectionHead>About You</SectionHead>

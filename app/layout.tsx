@@ -3,6 +3,7 @@ import { Inter, Playfair_Display } from 'next/font/google'
 import NgfEditBridge from '@/components/NgfEditBridge'
 import { getNgfContent } from '@/lib/ngf'
 import { PageChrome } from '@/components/layout/PageChrome'
+import { LocalBusinessSchema } from '@/app/local-business-schema'
 import './globals.css'
 
 const inter = Inter({
@@ -56,6 +57,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         className={`${inter.variable} ${playfair.variable} font-sans antialiased bg-[var(--bg)] text-[var(--ink)]`}
       >
         <a href="#main-content" className="skip-link">Skip to content</a>
+        <LocalBusinessSchema />
         <NgfEditBridge />
         <PageChrome content={content}>{children}</PageChrome>
       </body>

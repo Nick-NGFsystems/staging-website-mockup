@@ -26,6 +26,17 @@ export default function ContactPage() {
       if (el.name) data[el.name] = el.value
     }
 
+    // Honeypot — bots fill this hidden field; treat as a silent success so they
+    // don't learn they were caught. The field name must stay non-semantic
+    // ("_gotcha"): a name like "company" gets autofilled by browsers and
+    // password managers, which would silently discard real enquiries.
+    if (data._gotcha) {
+      setStatus('success')
+      form.reset()
+      return
+    }
+    delete data._gotcha
+
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
@@ -132,6 +143,9 @@ export default function ContactPage() {
                 {activeTab === 'general' && (
                   <form onSubmit={handleSubmit} className="bg-white border border-[var(--line)] rounded-[14px] p-8 shadow-[0_12px_28px_rgba(0,0,0,0.08)] space-y-5">
                     <input type="hidden" name="submission_type" value="General Inquiry" />
+                    <div aria-hidden="true" className="absolute -left-[9999px] top-auto w-px h-px overflow-hidden">
+                      <label>Leave this field empty<input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" /></label>
+                    </div>
                     <label className={LABEL_CLASS}>
                       Name <span className="text-red-500">*</span>
                       <input type="text" name="name" required placeholder="Your full name" className={INPUT_CLASS} />
@@ -162,6 +176,9 @@ export default function ContactPage() {
                 {activeTab === 'consultation' && (
                   <form onSubmit={handleSubmit} className="bg-white border border-[var(--line)] rounded-[14px] p-8 shadow-[0_12px_28px_rgba(0,0,0,0.08)] space-y-5">
                     <input type="hidden" name="submission_type" value="Consultation" />
+                    <div aria-hidden="true" className="absolute -left-[9999px] top-auto w-px h-px overflow-hidden">
+                      <label>Leave this field empty<input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" /></label>
+                    </div>
                     <label className={LABEL_CLASS}>
                       Name <span className="text-red-500">*</span>
                       <input type="text" name="name" required placeholder="Your full name" className={INPUT_CLASS} />
@@ -196,6 +213,9 @@ export default function ContactPage() {
                 {activeTab === 'evaluation' && (
                   <form onSubmit={handleSubmit} className="bg-white border border-[var(--line)] rounded-[14px] p-8 shadow-[0_12px_28px_rgba(0,0,0,0.08)] space-y-5">
                     <input type="hidden" name="submission_type" value="Home Evaluation" />
+                    <div aria-hidden="true" className="absolute -left-[9999px] top-auto w-px h-px overflow-hidden">
+                      <label>Leave this field empty<input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" /></label>
+                    </div>
                     <label className={LABEL_CLASS}>
                       Name <span className="text-red-500">*</span>
                       <input type="text" name="name" required placeholder="Your full name" className={INPUT_CLASS} />
