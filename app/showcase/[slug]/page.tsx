@@ -72,10 +72,14 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             Back to Portfolio
           </Link>
 
-          <div className="mt-7 grid gap-10 lg:grid-cols-[1.55fr_1fr] lg:gap-14">
+          {/* grid-cols-1 is load-bearing: without an explicit template the single
+              mobile track auto-sizes to its widest item, so a horizontally
+              scrolling child stretches the column past the viewport. Tailwind's
+              grid-cols-1 is minmax(0,1fr), which caps the track at the container. */}
+          <div className="mt-7 grid grid-cols-1 gap-10 lg:grid-cols-[1.55fr_minmax(0,1fr)] lg:gap-14">
             <ProjectGallery images={images} title={project.title} />
 
-            <div className="lg:pt-2">
+            <div className="min-w-0 lg:pt-2">
               <p
                 className="text-[0.68rem] uppercase tracking-[0.18em] text-[var(--muted)] mb-4 min-h-[1em]"
                 data-ngf-field={`showcase.projects.${i}.category`}
@@ -96,7 +100,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                 {project.title}
               </h1>
 
-              <dl className="mt-9 border-t border-[var(--line)]">
+              <dl className="details-list mt-9 border-t border-[var(--line)]">
                 {details.map(d => (
                   <div
                     key={d.field}

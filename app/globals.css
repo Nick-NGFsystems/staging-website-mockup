@@ -65,6 +65,11 @@ h1, h2, h3, h4 {
 .detail-row:has(dd:empty) { display: none; }
 [data-ngf-edit='true'] .detail-row:has(dd:empty) { display: grid; }
 
+/* When every row is empty, hide the list itself too — otherwise its top border
+   renders as an orphan rule under the heading. Still shown in the editor. */
+.details-list:not(:has(dd:not(:empty))) { display: none; }
+[data-ngf-edit='true'] .details-list:not(:has(dd:not(:empty))) { display: block; }
+
 /* ── Hero carousel cross-fade ── */
 .carousel-slide {
   position: absolute;
@@ -88,6 +93,12 @@ h1, h2, h3, h4 {
   width: max-content;
   animation: marquee 28s linear infinite;
 }
+/* The wrapper is the scroll container — NOT the track. The track is
+   width:max-content, so it is exactly as wide as its content and can never
+   scroll inside itself; putting overflow on it leaves the overflowing reviews
+   clipped and unreachable on phones. */
+.marquee-wrap { overflow: hidden; }
 @media (max-width: 820px) {
-  .marquee-track { animation: none; overflow-x: auto; }
+  .marquee-track { animation: none; }
+  .marquee-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 }

@@ -27,12 +27,11 @@ export default function ProjectGallery({
   const current = images[active] ?? images[0]
 
   return (
-    <div className="flex flex-col-reverse md:flex-row gap-3 md:gap-4">
+    <div className="flex flex-col-reverse md:flex-row gap-3 md:gap-4 min-w-0">
       {/* Thumbnails */}
-      {/* On phones this is a horizontal scroller. The negative margin lets it
-          bleed to the screen edge so the cut-off thumbnail signals "scrollable"
-          instead of looking like a broken grid. */}
-      <div className="flex md:flex-col gap-3 overflow-x-auto md:overflow-visible -mx-4 px-4 md:mx-0 md:px-0 md:w-[88px] shrink-0">
+      {/* On phones this is a horizontal scroller. It stays inside the page
+          gutters — no edge bleed — so nothing sits flush against the screen. */}
+      <div className="flex md:flex-col gap-3 overflow-x-auto md:overflow-visible md:w-[88px] shrink-0 min-w-0">
         {images.map((img, i) => (
           <button
             key={img.field}
@@ -60,7 +59,7 @@ export default function ProjectGallery({
       </div>
 
       {/* Main viewer */}
-      <div className="flex-1 bg-[#f4f4f4] overflow-hidden">
+      <div className="flex-1 min-w-0 bg-[#f4f4f4] overflow-hidden">
         <img
           src={current?.src}
           alt={title}

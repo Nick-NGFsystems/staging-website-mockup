@@ -371,7 +371,7 @@ export default async function HomePage() {
             {content['home.reviewsHeadline'] || 'Reviews'}
           </h2>
         </div>
-        <div className="overflow-hidden" aria-label="Scrolling reviews">
+        <div className="marquee-wrap" aria-label="Scrolling reviews">
           <div className="marquee-track">
             {reviews.map((quote, i) => (
               <div
