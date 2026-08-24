@@ -12,6 +12,8 @@ export type Project = {
   /** Detail-page fields. Blank by default — the client fills these in. */
   location: string
   stats: string
+  designer: string
+  salesContact: string
   photographer: string
   agent: string
   /** Extra photographs shown in the detail-page gallery. */
@@ -72,6 +74,8 @@ export function getProjects(
       image: row.image || '/images/staged/staged-15.webp',
       location: row.location || '',
       stats: row.stats || '',
+      designer: row.designer || '',
+      salesContact: row.salesContact || '',
       photographer: row.photographer || '',
       agent: row.agent || '',
       photos,
@@ -88,6 +92,8 @@ export const PROJECT_ITEM_FIELDS = JSON.stringify([
   { key: 'description', label: 'Description', type: 'textarea' },
   { key: 'location', label: 'Location', type: 'text' },
   { key: 'stats', label: 'Property Details (e.g. 3,200 sq ft | 4 Beds | 3 Baths)', type: 'text' },
+  { key: 'designer', label: 'Staged / Designed By', type: 'text' },
+  { key: 'salesContact', label: 'Sales Contact', type: 'text' },
   { key: 'photographer', label: 'Photographer Credit', type: 'text' },
   { key: 'agent', label: 'Listing Agent Credit', type: 'text' },
   { key: 'photo1', label: 'Gallery Photo 1', type: 'image' },

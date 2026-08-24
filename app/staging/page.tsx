@@ -54,9 +54,6 @@ export default async function StagingPage() {
           <div className="grid md:grid-cols-3 gap-6">
             {/* Why Staging */}
             <div className="bg-white border border-[var(--line)] rounded-[14px] p-6 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
-              <div className="w-10 h-10 rounded-full bg-[var(--brand)] flex items-center justify-center mb-4">
-                <span className="text-white font-bold text-sm">1</span>
-              </div>
               <h3
                 className="font-serif text-xl mb-3"
                 data-ngf-field="staging.card1Title"
@@ -79,9 +76,6 @@ export default async function StagingPage() {
 
             {/* Timeline */}
             <div className="bg-white border border-[var(--line)] rounded-[14px] p-6 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
-              <div className="w-10 h-10 rounded-full bg-[var(--brand)] flex items-center justify-center mb-4">
-                <span className="text-white font-bold text-sm">2</span>
-              </div>
               <h3
                 className="font-serif text-xl mb-3"
                 data-ngf-field="staging.card2Title"
@@ -104,9 +98,6 @@ export default async function StagingPage() {
 
             {/* What to Expect */}
             <div className="bg-white border border-[var(--line)] rounded-[14px] p-6 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
-              <div className="w-10 h-10 rounded-full bg-[var(--brand)] flex items-center justify-center mb-4">
-                <span className="text-white font-bold text-sm">3</span>
-              </div>
               <h3
                 className="font-serif text-xl mb-3"
                 data-ngf-field="staging.card3Title"

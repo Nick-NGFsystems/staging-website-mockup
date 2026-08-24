@@ -1,8 +1,9 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getNgfContent } from '@/lib/ngf'
-import { getProjects, type Project } from '@/lib/projects'
+import { getProjects, PROJECT_PHOTO_SLOTS, type Project } from '@/lib/projects'
 import { DEFAULT_PROJECTS } from '../projects-data'
+import ProjectGallery, { type GalleryImage } from './ProjectGallery'
 
 // No force-dynamic: it would bypass ISR entirely. The site relies on ISR plus
 // the /api/revalidate webhook, so published edits still appear immediately.
@@ -21,9 +22,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { project } = found
   return {
     title: project.title,
-    description:
-      project.description ||
-      `${project.title} — a home staged by Perrine Interiors.`,
+    description: project.description || `${project.title} — a home staged by Perrine Interiors.`,
     openGraph: { images: [{ url: project.image }] },
   }
 }
@@ -35,150 +34,126 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   const { project, all } = found
   const i = project.index
 
-  // Cover photo plus any populated gallery slots.
-  const photos = [project.image, ...project.photos].filter(Boolean)
+  // Cover photo first, then every gallery slot. Empty slots are still rendered
+  // so the client can fill them from the portal.
+  const images: GalleryImage[] = [
+    {
+      src: project.image,
+      field: `showcase.projects.${i}.image`,
+      label: 'Cover Photo',
+    },
+    ...Array.from({ length: PROJECT_PHOTO_SLOTS }, (_, n) => ({
+      src: project.photos[n] || project.image,
+      field: `showcase.projects.${i}.photo${n + 1}`,
+      label: `Gallery Photo ${n + 1}`,
+    })),
+  ]
+
+  const details: Array<{ label: string; value: string; field: string; ngfLabel: string }> = [
+    { label: 'Property', value: project.stats, field: `showcase.projects.${i}.stats`, ngfLabel: 'Property Details' },
+    { label: 'Location', value: project.location, field: `showcase.projects.${i}.location`, ngfLabel: 'Location' },
+    { label: 'Staged By', value: project.designer, field: `showcase.projects.${i}.designer`, ngfLabel: 'Staged / Designed By' },
+    { label: 'Sales Contact', value: project.salesContact, field: `showcase.projects.${i}.salesContact`, ngfLabel: 'Sales Contact' },
+    { label: 'Listed By', value: project.agent, field: `showcase.projects.${i}.agent`, ngfLabel: 'Listing Agent Credit' },
+    { label: 'Photographed By', value: project.photographer, field: `showcase.projects.${i}.photographer`, ngfLabel: 'Photographer Credit' },
+  ]
+
   const others = all.filter(p => p.slug !== project.slug).slice(0, 3)
 
   return (
     <main id="main-content">
-      {/* ── Cover ── */}
-      <section className="relative h-[62vh] min-h-[420px] overflow-hidden bg-black">
-        <img
-          src={project.image}
-          alt={project.title}
-          data-ngf-field={`showcase.projects.${i}.image`}
-          data-ngf-label="Cover Photo"
-          data-ngf-type="image"
-          data-ngf-section="Showcase Portfolio"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-black/25" />
-        <div className="relative z-10 h-full mx-auto max-w-[1120px] px-4 flex flex-col justify-end pb-12">
+      {/* ── Gallery + details ── */}
+      <section className="pt-8 pb-16 md:pt-12 md:pb-20">
+        <div className="mx-auto max-w-[1240px] px-4">
           <Link
             href="/showcase"
-            className="text-[0.68rem] uppercase tracking-[0.16em] text-white/70 hover:text-white transition-colors mb-5"
+            className="text-[0.68rem] uppercase tracking-[0.16em] text-[var(--muted)] hover:text-[var(--ink)] transition-colors"
           >
             Back to Portfolio
           </Link>
-          {project.category && (
-            <p
-              className="text-[0.72rem] uppercase tracking-[0.16em] text-white/75 mb-3"
-              data-ngf-field={`showcase.projects.${i}.category`}
-              data-ngf-label="Category"
-              data-ngf-type="text"
-              data-ngf-section="Showcase Portfolio"
-            >
-              {project.category}
-            </p>
-          )}
-          <h1
-            className="font-serif text-[clamp(2.2rem,5vw,3.6rem)] leading-[1.1] text-white"
-            data-ngf-field={`showcase.projects.${i}.title`}
-            data-ngf-label="Project Title"
-            data-ngf-type="text"
+
+          <div className="mt-7 grid gap-10 lg:grid-cols-[1.55fr_1fr] lg:gap-14">
+            <ProjectGallery images={images} title={project.title} />
+
+            <div className="lg:pt-2">
+              <p
+                className="text-[0.68rem] uppercase tracking-[0.18em] text-[var(--muted)] mb-4 min-h-[1em]"
+                data-ngf-field={`showcase.projects.${i}.category`}
+                data-ngf-label="Category"
+                data-ngf-type="text"
+                data-ngf-section="Showcase Portfolio"
+              >
+                {project.category}
+              </p>
+
+              <h1
+                className="font-serif text-[clamp(1.9rem,3.4vw,2.9rem)] leading-[1.12] tracking-[0.01em]"
+                data-ngf-field={`showcase.projects.${i}.title`}
+                data-ngf-label="Project Title"
+                data-ngf-type="text"
+                data-ngf-section="Showcase Portfolio"
+              >
+                {project.title}
+              </h1>
+
+              <dl className="mt-9 border-t border-[var(--line)]">
+                {details.map(d => (
+                  <div
+                    key={d.field}
+                    className="detail-row grid grid-cols-[9.5rem_1fr] gap-4 py-3.5 border-b border-[var(--line)]"
+                  >
+                    <dt className="text-[0.66rem] uppercase tracking-[0.16em] text-[var(--muted)] pt-[3px]">
+                      {d.label}
+                    </dt>
+                    <dd
+                      className="text-[0.95rem] leading-snug"
+                      data-ngf-field={d.field}
+                      data-ngf-label={d.ngfLabel}
+                      data-ngf-type="text"
+                      data-ngf-section="Showcase Portfolio"
+                    >
+                      {d.value}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+
+              <p className="mt-8 text-[0.95rem] text-[var(--muted)]">
+                Interested in staging a listing like this?{' '}
+                <Link href="/contact" className="text-[var(--ink)] border-b border-[var(--ink)] pb-0.5 hover:opacity-60 transition-opacity">
+                  Contact us.
+                </Link>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Description ── */}
+      <section className="pb-16 md:pb-24">
+        <div className="mx-auto max-w-[1240px] px-4">
+          <h2 className="text-[0.72rem] uppercase tracking-[0.18em] text-[var(--muted)] pb-4 border-b border-[var(--line)]">
+            Description
+          </h2>
+          <p
+            className="mt-7 max-w-[70ch] text-[1.05rem] leading-relaxed whitespace-pre-line"
+            data-ngf-field={`showcase.projects.${i}.description`}
+            data-ngf-label="Description"
+            data-ngf-type="textarea"
             data-ngf-section="Showcase Portfolio"
           >
-            {project.title}
-          </h1>
-        </div>
-      </section>
-
-      {/* ── Details ── */}
-      <section className="py-16 md:py-24">
-        <div className="mx-auto max-w-[1120px] px-4 grid gap-12 md:grid-cols-[1.4fr_1fr]">
-          <div>
-            <p
-              className="text-[1.05rem] leading-relaxed text-[var(--ink)] whitespace-pre-line"
-              data-ngf-field={`showcase.projects.${i}.description`}
-              data-ngf-label="Description"
-              data-ngf-type="textarea"
-              data-ngf-section="Showcase Portfolio"
-            >
-              {project.description || 'Add a description of this project here.'}
-            </p>
-          </div>
-
-          <dl className="text-[0.9rem] border-t border-[var(--line)] pt-6 space-y-5">
-            <div>
-              <dt className="text-[0.68rem] uppercase tracking-[0.16em] text-[var(--muted)] mb-1">Location</dt>
-              <dd
-                data-ngf-field={`showcase.projects.${i}.location`}
-                data-ngf-label="Location"
-                data-ngf-type="text"
-                data-ngf-section="Showcase Portfolio"
-              >
-                {project.location}
-              </dd>
-            </div>
-            <div>
-              <dt className="text-[0.68rem] uppercase tracking-[0.16em] text-[var(--muted)] mb-1">Property</dt>
-              <dd
-                data-ngf-field={`showcase.projects.${i}.stats`}
-                data-ngf-label="Property Details"
-                data-ngf-type="text"
-                data-ngf-section="Showcase Portfolio"
-              >
-                {project.stats}
-              </dd>
-            </div>
-            <div>
-              <dt className="text-[0.68rem] uppercase tracking-[0.16em] text-[var(--muted)] mb-1">Listed By</dt>
-              <dd
-                data-ngf-field={`showcase.projects.${i}.agent`}
-                data-ngf-label="Listing Agent Credit"
-                data-ngf-type="text"
-                data-ngf-section="Showcase Portfolio"
-              >
-                {project.agent}
-              </dd>
-            </div>
-            <div>
-              <dt className="text-[0.68rem] uppercase tracking-[0.16em] text-[var(--muted)] mb-1">Photography</dt>
-              <dd
-                data-ngf-field={`showcase.projects.${i}.photographer`}
-                data-ngf-label="Photographer Credit"
-                data-ngf-type="text"
-                data-ngf-section="Showcase Portfolio"
-              >
-                {project.photographer}
-              </dd>
-            </div>
-          </dl>
-        </div>
-      </section>
-
-      {/* ── Gallery ── */}
-      <section className="pb-16 md:pb-24">
-        <div className="mx-auto max-w-[1120px] px-4 grid gap-4 sm:grid-cols-2">
-          {[1, 2, 3, 4].map(n => {
-            const src = project.photos[n - 1]
-            return (
-              <div key={n} className={`bg-[#f4f4f4] overflow-hidden ${src ? '' : 'hidden'}`}>
-                <img
-                  src={src || project.image}
-                  alt={`${project.title} — photograph ${n}`}
-                  data-ngf-field={`showcase.projects.${i}.photo${n}`}
-                  data-ngf-label={`Gallery Photo ${n}`}
-                  data-ngf-type="image"
-                  data-ngf-section="Showcase Portfolio"
-                  className="w-full aspect-[3/2] object-cover"
-                />
-              </div>
-            )
-          })}
-        </div>
-        {photos.length <= 1 && (
-          <p className="mx-auto max-w-[1120px] px-4 text-[0.9rem] text-[var(--muted)]">
-            Add gallery photographs for this project from the site editor.
+            {project.description || 'Add a description of this project here.'}
           </p>
-        )}
+        </div>
       </section>
 
       {/* ── More projects ── */}
       {others.length > 0 && (
         <section className="py-16 md:py-20 border-t border-[var(--line)]">
-          <div className="mx-auto max-w-[1120px] px-4">
-            <h2 className="font-serif text-[clamp(1.5rem,2.5vw,2rem)] mb-10">More Projects</h2>
+          <div className="mx-auto max-w-[1240px] px-4">
+            <h2 className="text-[0.72rem] uppercase tracking-[0.18em] text-[var(--muted)] mb-9">
+              More Projects
+            </h2>
             <div className="grid gap-6 sm:grid-cols-3">
               {others.map(p => (
                 <Link key={p.slug} href={`/showcase/${p.slug}`} className="group block">

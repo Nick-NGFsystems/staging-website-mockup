@@ -57,6 +57,14 @@ h1, h2, h3, h4 {
 }
 .skip-link:focus { top: 0.75rem; }
 
+/* ── Project detail rows ──
+   A credit the client hasn't filled in yet would otherwise render as a label
+   with nothing beside it. Hide those rows on the live site, but keep them
+   visible inside the portal editor (which sets data-ngf-edit on <html>) so the
+   fields are still discoverable and fillable. */
+.detail-row:has(dd:empty) { display: none; }
+[data-ngf-edit='true'] .detail-row:has(dd:empty) { display: grid; }
+
 /* ── Hero carousel cross-fade ── */
 .carousel-slide {
   position: absolute;
