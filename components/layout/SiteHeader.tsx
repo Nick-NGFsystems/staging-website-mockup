@@ -170,10 +170,16 @@ export function SiteHeader({ content }: Props) {
           {/* About dropdown — text only, no icon */}
           <div className="relative group">
             <button
-              className="py-1 text-[0.78rem] uppercase tracking-[0.14em] border-b border-transparent text-[var(--ink)] hover:border-[var(--ink)] transition-colors"
+              className="flex items-center gap-2 py-1 text-[0.78rem] uppercase tracking-[0.14em] border-b border-transparent text-[var(--ink)] hover:border-[var(--ink)] transition-colors"
               aria-haspopup="true"
             >
               About
+              {/* Caret drawn in CSS (a rotated corner), not an icon asset.
+                  Flips to point up while the menu is open. */}
+              <span
+                aria-hidden="true"
+                className="inline-block w-[5px] h-[5px] border-r border-b border-current -translate-y-[2px] rotate-45 transition-transform duration-200 group-hover:translate-y-[1px] group-hover:rotate-[225deg]"
+              />
             </button>
             <div className="hidden group-hover:grid absolute top-full left-0 min-w-[190px] bg-white border border-[var(--line)] p-2 z-50 gap-1">
               {aboutLinks.map(l => (
@@ -236,9 +242,12 @@ export function SiteHeader({ content }: Props) {
             onClick={() => setAboutOpen(v => !v)}
           >
             <span>About</span>
-            <span className="text-[var(--muted)] normal-case tracking-normal text-[0.72rem]">
-              {aboutOpen ? 'Hide' : 'Show'}
-            </span>
+            <span
+              aria-hidden="true"
+              className={`inline-block w-[5px] h-[5px] border-r border-b border-current mr-1 transition-transform duration-200 ${
+                aboutOpen ? 'translate-y-[1px] rotate-[225deg]' : '-translate-y-[2px] rotate-45'
+              }`}
+            />
           </button>
           {aboutOpen && (
             <div className="pl-4 flex flex-col gap-1">
