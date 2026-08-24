@@ -1,15 +1,10 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
+import { PROJECT_ITEM_FIELDS, type Project } from '@/lib/projects'
 import { PhotoProvider, PhotoView } from 'react-photo-view'
 import 'react-photo-view/dist/react-photo-view.css'
-
-export type ShowcaseProject = {
-  title: string
-  description: string
-  category: string
-  image: string
-}
 
 export type GalleryPhoto = {
   image: string
@@ -22,7 +17,7 @@ export default function ShowcaseGrid({
   projects,
   gallery,
 }: {
-  projects: ShowcaseProject[]
+  projects: Project[]
   gallery: GalleryPhoto[]
 }) {
   const [activeFilter, setActiveFilter] = useState('All')
@@ -58,7 +53,7 @@ export default function ShowcaseGrid({
             data-ngf-item-label="Project"
             data-ngf-min-items="1"
             data-ngf-max-items="24"
-            data-ngf-item-fields='[{"key":"image","label":"Photo","type":"image","aspect":"3:2"},{"key":"title","label":"Project Title","type":"text"},{"key":"category","label":"Category","type":"text"},{"key":"description","label":"Description","type":"textarea"}]'
+            data-ngf-item-fields={PROJECT_ITEM_FIELDS}
           >
             {projects.map((project, i) => {
               const hidden = activeFilter !== 'All' && project.category !== activeFilter
@@ -66,18 +61,20 @@ export default function ShowcaseGrid({
                 <div
                   key={i}
                   data-category={project.category}
-                  className={`bg-white border border-[var(--line)] rounded-[14px] overflow-hidden shadow-[0_1px_2px_rgba(0,0,0,0.04)] ${hidden ? 'hidden' : ''}`}
+                  className={`group bg-white border border-[var(--line)] rounded-[14px] overflow-hidden shadow-[0_1px_2px_rgba(0,0,0,0.04)] ${hidden ? 'hidden' : ''}`}
                 >
+                  <Link href={`/showcase/${project.slug}`} className="block overflow-hidden">
                   <img
                     src={project.image || '/images/staged/staged-15.webp'}
                     alt={project.title || `Staged project ${i + 1}`}
-                    className="w-full aspect-[3/2] object-cover"
+                    className="w-full aspect-[3/2] object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                     data-ngf-field={`showcase.projects.${i}.image`}
                     data-ngf-label="Photo"
                     data-ngf-type="image"
                     data-ngf-section="Showcase Portfolio"
                     data-ngf-aspect="3:2"
                   />
+                  </Link>
                   <div className="p-5">
                     <div className="flex items-start justify-between gap-2 mb-2">
                       <h3
@@ -108,6 +105,12 @@ export default function ShowcaseGrid({
                     >
                       {project.description}
                     </p>
+                    <Link
+                      href={`/showcase/${project.slug}`}
+                      className="inline-block mt-4 text-[0.68rem] uppercase tracking-[0.16em] border-b border-[var(--ink)] pb-0.5 hover:opacity-60 transition-opacity"
+                    >
+                      View Project
+                    </Link>
                   </div>
                 </div>
               )
