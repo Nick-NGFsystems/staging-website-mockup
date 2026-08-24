@@ -17,33 +17,38 @@ const aboutLinks = [
 
 /** Scroll distance (px) ignored before we start hiding, so small nudges don't flicker. */
 const HIDE_THRESHOLD = 8
-/** Never hide while within this distance of the top of the page. */
+/** Never hide the nav tier while within this distance of the top of the page. */
 const TOP_ZONE = 120
+/** The utility tier shows only while genuinely at the top of the page. */
+const AT_TOP = 24
 
 export function SiteHeader({ content }: Props) {
   const pathname = usePathname()
   const [mobileOpen, setMobileOpen] = useState(false)
   const [aboutOpen, setAboutOpen] = useState(false)
   const [hidden, setHidden] = useState(false)
-  const [compact, setCompact] = useState(false)
+  const [atTop, setAtTop] = useState(true)
   const lastY = useRef(0)
 
   const brandName = content['brand.businessName'] || 'Perrine Interiors'
+  const phone = content['brand.phone'] || '(616) 555-0100'
+  const email = content['brand.email'] || 'perrinematerials@gmail.com'
 
-  // Hide the bar when scrolling down, bring it straight back on any upward
-  // movement. Uses a ref (not state) for the previous offset so the listener
-  // never reads a stale value, and rAF-throttles to stay off the scroll path.
+  // The two tiers behave independently:
+  //   • utility tier — visible only while at the very top of the page
+  //   • nav tier     — hides on scroll down, returns on any scroll up
+  // Uses a ref (not state) for the previous offset so the listener never reads
+  // a stale value, and rAF-throttles to stay off the scroll path.
   useEffect(() => {
     lastY.current = window.scrollY
+    setAtTop(window.scrollY <= AT_TOP)
     let ticking = false
 
     const update = () => {
       const y = window.scrollY
       const delta = y - lastY.current
 
-      // Collapse the utility tier once we're past the top zone, so the bar that
-      // slides back into view on scroll-up is the slim one-tier version.
-      setCompact(y > TOP_ZONE)
+      setAtTop(y <= AT_TOP)
 
       if (Math.abs(delta) > HIDE_THRESHOLD) {
         // Any upward scroll reveals immediately; near the top always reveals.
@@ -83,20 +88,35 @@ export function SiteHeader({ content }: Props) {
         hidden ? '-translate-y-full' : 'translate-y-0'
       }`}
     >
-      {/* Utility tier — collapses away once scrolled */}
+      {/* Utility tier — shown only while at the very top of the page */}
       <div
         className={`overflow-hidden border-b border-[var(--line)] transition-[max-height,opacity] duration-300 ease-out ${
-          compact ? 'max-h-0 opacity-0' : 'max-h-12 opacity-100'
+          atTop ? 'max-h-12 opacity-100' : 'max-h-0 opacity-0'
         }`}
       >
-        <div className="mx-auto flex w-full max-w-[1120px] items-center justify-end gap-6 px-4 h-10">
+        <div className="mx-auto flex w-full max-w-[1120px] items-center justify-end gap-5 px-4 h-10">
           <a
-            href="mailto:perrinematerials@gmail.com"
+            href={`tel:${phone.replace(/[^0-9+]/g, '')}`}
             className="text-[0.68rem] uppercase tracking-[0.16em] text-[var(--muted)] hover:text-[var(--ink)] transition-colors"
+            data-ngf-field="brand.phone"
+            data-ngf-label="Phone Number"
+            data-ngf-type="text"
+            data-ngf-section="Brand"
           >
-            perrinematerials@gmail.com
+            {phone}
           </a>
           <span aria-hidden="true" className="h-3 w-px bg-[var(--line)]" />
+          <a
+            href={`mailto:${email}`}
+            className="hidden sm:inline text-[0.68rem] uppercase tracking-[0.16em] text-[var(--muted)] hover:text-[var(--ink)] transition-colors"
+            data-ngf-field="brand.email"
+            data-ngf-label="Email Address"
+            data-ngf-type="text"
+            data-ngf-section="Brand"
+          >
+            {email}
+          </a>
+          <span aria-hidden="true" className="hidden sm:inline h-3 w-px bg-[var(--line)]" />
           <a
             href="https://www.instagram.com"
             target="_blank"
