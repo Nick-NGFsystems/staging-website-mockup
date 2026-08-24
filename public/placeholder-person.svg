@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600" role="img" aria-label="Team photo placeholder">
-  <rect width="600" height="600" fill="#ece7df"/>
-  <circle cx="300" cy="232" r="94" fill="#c9bfb1"/>
-  <path d="M300 350c-104 0-188 66-188 148v102h376V498c0-82-84-148-188-148z" fill="#c9bfb1"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" width="900" height="1200" role="img" aria-label="Team photo placeholder">
+  <rect width="900" height="1200" fill="#efefef"/>
+  <circle cx="450" cy="470" r="140" fill="#d2d2d2"/>
+  <path d="M450 650c-158 0-286 100-286 224v326h572V874c0-124-128-224-286-224z" fill="#d2d2d2"/>
 </svg>

@@ -1,4 +1,5 @@
 import { getNgfContent, getItems } from '@/lib/ngf'
+import { TeamGrid } from '@/components/TeamGrid'
 
 export const metadata = {
   title: 'Meet the Team',
@@ -63,59 +64,22 @@ export default async function TeamPage() {
       </section>
 
       {/* ── Team Grid ── */}
-      <section className="py-16 md:py-24">
+      <section className="py-20 md:py-28">
         <div className="mx-auto max-w-[1120px] px-4">
-          <div
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-            data-ngf-group="team.members"
-            data-ngf-item-fields='[{"key":"photo","label":"Photo","type":"image"},{"key":"name","label":"Name","type":"text"},{"key":"role","label":"Role","type":"text"},{"key":"bio","label":"Bio","type":"textarea"}]'
+          <p
+            className="max-w-[720px] text-[1.05rem] leading-relaxed text-[var(--muted)] mb-16"
+            data-ngf-field="team.intro"
+            data-ngf-label="Intro Paragraph"
+            data-ngf-type="textarea"
+            data-ngf-section="Team"
           >
-            {defaultTeam.map((member, i) => (
-              <div
-                key={i}
-                className="bg-white border border-[var(--line)] rounded-[14px] p-6 shadow-[0_1px_2px_rgba(0,0,0,0.04)]"
-              >
-                <img
-                  src={member.photo || '/placeholder-person.svg'}
-                  alt={member.name || `Team Member ${i + 1}`}
-                  className="w-full aspect-square object-cover rounded-[14px] mb-5"
-                  data-ngf-field={`team.members.${i}.photo`}
-                  data-ngf-label="Photo"
-                  data-ngf-type="image"
-                  data-ngf-section="Team"
-                />
-                <h3
-                  className="font-serif text-xl mb-1"
-                  data-ngf-field={`team.members.${i}.name`}
-                  data-ngf-label="Name"
-                  data-ngf-type="text"
-                  data-ngf-section="Team"
-                >
-                  {member.name || 'Team Member'}
-                </h3>
-                <p
-                  className="text-[var(--brand)] text-sm font-semibold mb-3"
-                  data-ngf-field={`team.members.${i}.role`}
-                  data-ngf-label="Role"
-                  data-ngf-type="text"
-                  data-ngf-section="Team"
-                >
-                  {member.role || 'Stager'}
-                </p>
-                <p
-                  className="text-[var(--muted)] text-sm leading-relaxed"
-                  data-ngf-field={`team.members.${i}.bio`}
-                  data-ngf-label="Bio"
-                  data-ngf-type="textarea"
-                  data-ngf-section="Team"
-                >
-                  {member.bio || 'Bio coming soon.'}
-                </p>
-              </div>
-            ))}
-          </div>
+            {content['team.intro'] || 'Every home we stage is prepared by people who care how it feels to walk through the front door. Get to know the team behind the transformations.'}
+          </p>
+
+          <TeamGrid members={defaultTeam} content={content} showBio />
         </div>
       </section>
+
     </main>
   )
 }

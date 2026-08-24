@@ -25,6 +25,7 @@ export function SiteHeader({ content }: Props) {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [aboutOpen, setAboutOpen] = useState(false)
   const [hidden, setHidden] = useState(false)
+  const [compact, setCompact] = useState(false)
   const lastY = useRef(0)
 
   const brandName = content['brand.businessName'] || 'Perrine Interiors'
@@ -39,6 +40,10 @@ export function SiteHeader({ content }: Props) {
     const update = () => {
       const y = window.scrollY
       const delta = y - lastY.current
+
+      // Collapse the utility tier once we're past the top zone, so the bar that
+      // slides back into view on scroll-up is the slim one-tier version.
+      setCompact(y > TOP_ZONE)
 
       if (Math.abs(delta) > HIDE_THRESHOLD) {
         // Any upward scroll reveals immediately; near the top always reveals.
@@ -78,6 +83,31 @@ export function SiteHeader({ content }: Props) {
         hidden ? '-translate-y-full' : 'translate-y-0'
       }`}
     >
+      {/* Utility tier — collapses away once scrolled */}
+      <div
+        className={`overflow-hidden border-b border-[var(--line)] transition-[max-height,opacity] duration-300 ease-out ${
+          compact ? 'max-h-0 opacity-0' : 'max-h-12 opacity-100'
+        }`}
+      >
+        <div className="mx-auto flex w-full max-w-[1120px] items-center justify-end gap-6 px-4 h-10">
+          <a
+            href="mailto:perrinematerials@gmail.com"
+            className="text-[0.68rem] uppercase tracking-[0.16em] text-[var(--muted)] hover:text-[var(--ink)] transition-colors"
+          >
+            perrinematerials@gmail.com
+          </a>
+          <span aria-hidden="true" className="h-3 w-px bg-[var(--line)]" />
+          <a
+            href="https://www.instagram.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[0.68rem] uppercase tracking-[0.16em] text-[var(--muted)] hover:text-[var(--ink)] transition-colors"
+          >
+            Instagram
+          </a>
+        </div>
+      </div>
+
       <div className="mx-auto flex h-[78px] w-full max-w-[1120px] items-center justify-between gap-4 px-4">
         {/* Brand */}
         <Link
