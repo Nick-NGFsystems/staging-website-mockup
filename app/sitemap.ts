@@ -20,6 +20,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/team`,          lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${base}/shop`,          lastModified: now, changeFrequency: 'weekly',  priority: 0.6 },
     { url: `${base}/blog`,          lastModified: now, changeFrequency: 'weekly',  priority: 0.6 },
+    { url: `${base}/privacy`,       lastModified: now, changeFrequency: 'yearly',  priority: 0.3 },
   ]
 
   // Dynamic project pages. Falls back to the hardcoded portfolio if the portal

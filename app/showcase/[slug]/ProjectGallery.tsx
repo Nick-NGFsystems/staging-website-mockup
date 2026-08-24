@@ -29,7 +29,10 @@ export default function ProjectGallery({
   return (
     <div className="flex flex-col-reverse md:flex-row gap-3 md:gap-4">
       {/* Thumbnails */}
-      <div className="flex md:flex-col gap-3 overflow-x-auto md:overflow-visible md:w-[88px] shrink-0">
+      {/* On phones this is a horizontal scroller. The negative margin lets it
+          bleed to the screen edge so the cut-off thumbnail signals "scrollable"
+          instead of looking like a broken grid. */}
+      <div className="flex md:flex-col gap-3 overflow-x-auto md:overflow-visible -mx-4 px-4 md:mx-0 md:px-0 md:w-[88px] shrink-0">
         {images.map((img, i) => (
           <button
             key={img.field}

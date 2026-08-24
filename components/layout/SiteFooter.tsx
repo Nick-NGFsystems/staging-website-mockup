@@ -80,9 +80,14 @@ export function SiteFooter({ content }: Props) {
           </div>
         </div>
 
-        <p className="mt-12 pt-6 border-t border-[var(--line)] text-[0.78rem] text-[var(--muted)]">
-          © {year} {businessName}. All rights reserved.
-        </p>
+        <div className="mt-12 pt-6 border-t border-[var(--line)] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <p className="text-[0.78rem] text-[var(--muted)]">
+            © {year} {businessName}. All rights reserved.
+          </p>
+          <Link href="/privacy" className="text-[0.78rem] text-[var(--muted)] hover:text-[var(--ink)] hover:underline underline-offset-4">
+            Privacy &amp; Cookie Policy
+          </Link>
+        </div>
       </div>
     </footer>
   )

@@ -76,9 +76,11 @@ export default function ShowcaseGrid({
                   />
                   </Link>
                   <div className="p-5">
-                    <div className="flex items-start justify-between gap-2 mb-2">
+                    {/* Category drops below the title on phones rather than
+                        competing with it for a narrow row. */}
+                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1.5 sm:gap-2 mb-2">
                       <h3
-                        className="font-serif text-lg leading-snug"
+                        className="font-serif text-lg leading-snug min-w-0"
                         data-ngf-field={`showcase.projects.${i}.title`}
                         data-ngf-label="Project Title"
                         data-ngf-type="text"

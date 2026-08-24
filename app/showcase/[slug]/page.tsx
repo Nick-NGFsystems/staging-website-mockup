@@ -100,13 +100,16 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                 {details.map(d => (
                   <div
                     key={d.field}
-                    className="detail-row grid grid-cols-[9.5rem_1fr] gap-4 py-3.5 border-b border-[var(--line)]"
+                    // Stacks on phones — a fixed label column would eat ~45% of a
+                    // 375px screen and crush values like "Listed by …" into a
+                    // sliver. Two columns only once there's room.
+                    className="detail-row grid grid-cols-1 gap-1 sm:grid-cols-[8.5rem_minmax(0,1fr)] sm:gap-4 py-3.5 border-b border-[var(--line)]"
                   >
-                    <dt className="text-[0.66rem] uppercase tracking-[0.16em] text-[var(--muted)] pt-[3px]">
+                    <dt className="text-[0.66rem] uppercase tracking-[0.16em] text-[var(--muted)] sm:pt-[3px]">
                       {d.label}
                     </dt>
                     <dd
-                      className="text-[0.95rem] leading-snug"
+                      className="text-[0.95rem] leading-snug break-words"
                       data-ngf-field={d.field}
                       data-ngf-label={d.ngfLabel}
                       data-ngf-type="text"
