@@ -1,0 +1,14 @@
+# Normalize line endings. Without this, editing on Windows rewrites every file
+# with CRLF while the git index holds LF, so `git status` shows the entire repo
+# as modified and any push becomes thousands of lines of whitespace noise.
+* text=auto eol=lf
+
+# Binary assets — never touch these.
+*.webp binary
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.ico  binary
+*.pdf  binary
+*.woff binary
+*.woff2 binary

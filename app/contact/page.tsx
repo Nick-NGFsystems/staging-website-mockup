@@ -5,7 +5,7 @@ import { useState } from 'react'
 type Tab = 'general' | 'consultation' | 'evaluation'
 type FormStatus = 'idle' | 'submitting' | 'success' | 'error'
 
-const INPUT_CLASS = 'w-full border border-[#cfc7bb] rounded-[10px] px-3 py-2.5 font-sans text-base bg-white focus:outline-none focus:border-[var(--brand)]'
+const INPUT_CLASS = 'w-full border border-[#d4d4d4] rounded-[10px] px-3 py-2.5 font-sans text-base bg-white focus:outline-none focus:border-[var(--brand)]'
 const LABEL_CLASS = 'flex flex-col gap-1.5 text-[0.92rem] text-[#3a3a3a]'
 
 export default function ContactPage() {
@@ -67,12 +67,12 @@ export default function ContactPage() {
       {/* ── Hero ── */}
       <section
         className="relative min-h-[42vh] bg-cover bg-center flex items-center text-white"
-        style={{ backgroundImage: "url('/placeholder-hero.jpg')" }}
+        style={{ backgroundImage: "url('/images/staged/staged-18.webp')" }}
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-[rgba(12,28,25,0.8)] to-[rgba(12,28,25,0.25)]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[rgba(0,0,0,0.6)] to-[rgba(0,0,0,0.2)]" />
         <div className="relative z-10 mx-auto w-full max-w-[1120px] px-4 max-w-[760px]">
           <p
-            className="inline-block text-[0.82rem] tracking-[0.08em] uppercase text-[#f5d9a6] mb-3"
+            className="inline-block text-[0.82rem] tracking-[0.08em] uppercase text-[#ffffff] mb-3"
             data-ngf-field="contact.heroEyebrow"
             data-ngf-label="Eyebrow"
             data-ngf-type="text"
@@ -141,7 +141,7 @@ export default function ContactPage() {
               <>
                 {/* General Inquiry Form */}
                 {activeTab === 'general' && (
-                  <form onSubmit={handleSubmit} className="bg-white border border-[var(--line)] rounded-[14px] p-8 shadow-[0_12px_28px_rgba(0,0,0,0.08)] space-y-5">
+                  <form onSubmit={handleSubmit} className="bg-white border border-[var(--line)] rounded-[14px] p-8 shadow-[0_1px_2px_rgba(0,0,0,0.04)] space-y-5">
                     <input type="hidden" name="submission_type" value="General Inquiry" />
                     <div aria-hidden="true" className="absolute -left-[9999px] top-auto w-px h-px overflow-hidden">
                       <label>Leave this field empty<input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" /></label>
@@ -174,7 +174,7 @@ export default function ContactPage() {
 
                 {/* Consultation Form */}
                 {activeTab === 'consultation' && (
-                  <form onSubmit={handleSubmit} className="bg-white border border-[var(--line)] rounded-[14px] p-8 shadow-[0_12px_28px_rgba(0,0,0,0.08)] space-y-5">
+                  <form onSubmit={handleSubmit} className="bg-white border border-[var(--line)] rounded-[14px] p-8 shadow-[0_1px_2px_rgba(0,0,0,0.04)] space-y-5">
                     <input type="hidden" name="submission_type" value="Consultation" />
                     <div aria-hidden="true" className="absolute -left-[9999px] top-auto w-px h-px overflow-hidden">
                       <label>Leave this field empty<input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" /></label>
@@ -211,7 +211,7 @@ export default function ContactPage() {
 
                 {/* Home Evaluation Form */}
                 {activeTab === 'evaluation' && (
-                  <form onSubmit={handleSubmit} className="bg-white border border-[var(--line)] rounded-[14px] p-8 shadow-[0_12px_28px_rgba(0,0,0,0.08)] space-y-5">
+                  <form onSubmit={handleSubmit} className="bg-white border border-[var(--line)] rounded-[14px] p-8 shadow-[0_1px_2px_rgba(0,0,0,0.04)] space-y-5">
                     <input type="hidden" name="submission_type" value="Home Evaluation" />
                     <div aria-hidden="true" className="absolute -left-[9999px] top-auto w-px h-px overflow-hidden">
                       <label>Leave this field empty<input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" /></label>

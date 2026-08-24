@@ -6,20 +6,21 @@ interface Props {
 }
 
 const footerLinks = [
-  { href: '/shop', label: 'Shop' },
-  { href: '/team', label: 'Meet the Team' },
   { href: '/staging', label: 'Services' },
+  { href: '/consultations', label: 'Consultations' },
   { href: '/showcase', label: 'Portfolio' },
+  { href: '/team', label: 'Our Team' },
   { href: '/blog', label: 'Blog' },
+  { href: '/shop', label: 'Shop' },
   { href: '/contact', label: 'Contact' },
 ]
 
 const socialLinks = [
-  { href: 'https://www.youtube.com', label: 'YouTube', abbr: 'YT' },
-  { href: 'https://www.facebook.com', label: 'Facebook', abbr: 'FB' },
-  { href: 'https://www.instagram.com', label: 'Instagram', abbr: 'IG' },
-  { href: 'https://www.tiktok.com', label: 'TikTok', abbr: 'TT' },
-  { href: 'https://www.zillow.com', label: 'Zillow', abbr: 'Z' },
+  { href: 'https://www.instagram.com', label: 'Instagram' },
+  { href: 'https://www.facebook.com', label: 'Facebook' },
+  { href: 'https://www.youtube.com', label: 'YouTube' },
+  { href: 'https://www.tiktok.com', label: 'TikTok' },
+  { href: 'https://www.zillow.com', label: 'Zillow' },
 ]
 
 export function SiteFooter({ content }: Props) {
@@ -27,38 +28,61 @@ export function SiteFooter({ content }: Props) {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="border-t border-[var(--line)] bg-[#f8f5f0] py-8">
-      <div className="mx-auto max-w-[1120px] px-4 flex flex-col items-center gap-4">
-        {/* Quick links */}
-        <nav aria-label="Footer links" className="flex flex-wrap justify-center gap-2">
-          {footerLinks.map(l => (
-            <Link
-              key={l.href}
-              href={l.href}
-              className="border border-[var(--line)] rounded-full px-3 py-1.5 bg-white text-[0.88rem] text-[#2d3836] hover:border-[var(--brand)] hover:text-[var(--brand)] transition-colors"
-            >
-              {l.label}
-            </Link>
-          ))}
-        </nav>
+    <footer className="border-t border-[var(--line)] bg-white py-14">
+      <div className="mx-auto max-w-[1120px] px-4">
+        <div className="grid gap-10 md:grid-cols-3">
+          {/* Wordmark */}
+          <div>
+            <p className="font-serif text-xl text-[var(--ink)]">{businessName}</p>
+            <p className="mt-2 text-[0.85rem] text-[var(--muted)] max-w-[28ch]">
+              Home staging and home edit consultations across West Michigan.
+            </p>
+          </div>
 
-        {/* Social links */}
-        <div className="flex gap-2" aria-label="Social media links">
-          {socialLinks.map(s => (
-            <a
-              key={s.label}
-              href={s.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={s.label}
-              className="w-9 h-9 rounded-full border border-[var(--line)] bg-white flex items-center justify-center text-[0.78rem] font-bold text-[#2d3836] hover:border-[var(--brand)] hover:text-[var(--brand)] transition-colors min-h-[44px] min-w-[44px]"
-            >
-              {s.abbr}
-            </a>
-          ))}
+          {/* Explore */}
+          <nav aria-label="Footer links">
+            <p className="text-[0.72rem] uppercase tracking-[0.16em] text-[var(--muted)] mb-4">
+              Explore
+            </p>
+            <ul className="grid gap-2.5">
+              {footerLinks.map(l => (
+                <li key={l.href}>
+                  <Link
+                    href={l.href}
+                    className="text-[0.85rem] text-[var(--ink)] hover:underline underline-offset-4"
+                  >
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          {/* Social — plain text links, no badges or icons */}
+          <div>
+            <p className="text-[0.72rem] uppercase tracking-[0.16em] text-[var(--muted)] mb-4">
+              Follow
+            </p>
+            <ul className="grid gap-2.5">
+              {socialLinks.map(s => (
+                <li key={s.label}>
+                  <a
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[0.85rem] text-[var(--ink)] hover:underline underline-offset-4"
+                  >
+                    {s.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
-        <p className="text-[0.9rem] text-[var(--muted)]">© {year} {businessName}</p>
+        <p className="mt-12 pt-6 border-t border-[var(--line)] text-[0.78rem] text-[var(--muted)]">
+          © {year} {businessName}. All rights reserved.
+        </p>
       </div>
     </footer>
   )

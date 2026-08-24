@@ -66,7 +66,7 @@ export default function ShowcaseGrid({
                 <div
                   key={i}
                   data-category={project.category}
-                  className={`bg-white border border-[var(--line)] rounded-[14px] overflow-hidden shadow-[0_12px_28px_rgba(0,0,0,0.08)] ${hidden ? 'hidden' : ''}`}
+                  className={`bg-white border border-[var(--line)] rounded-[14px] overflow-hidden shadow-[0_1px_2px_rgba(0,0,0,0.04)] ${hidden ? 'hidden' : ''}`}
                 >
                   <img
                     src={project.image || '/images/staged/staged-15.webp'}

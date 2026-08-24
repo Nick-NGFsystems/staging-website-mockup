@@ -24,9 +24,9 @@ export default async function HomePage() {
   const defaultTeam = teamMembers.length > 0
     ? teamMembers
     : [
-        { photo: '/placeholder-team-1.jpg', name: 'Melissa Perrine', role: 'Founder' },
-        { photo: '/placeholder-team-2.jpg', name: 'Team Member', role: 'Role' },
-        { photo: '/placeholder-team-3.jpg', name: 'Team Member', role: 'Role' },
+        { photo: '/placeholder-person.svg', name: 'Melissa Perrine', role: 'Founder' },
+        { photo: '/placeholder-person.svg', name: 'Team Member', role: 'Role' },
+        { photo: '/placeholder-person.svg', name: 'Team Member', role: 'Role' },
       ]
 
   const blogItems = getItems(content, 'blog.posts')
@@ -77,11 +77,11 @@ export default async function HomePage() {
         className="relative min-h-[64vh] bg-cover bg-center flex items-center text-white"
         style={{ backgroundImage: `url('${content['home.heroImage'] || '/images/hero.webp'}')` }}
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-[rgba(12,28,25,0.85)] to-[rgba(12,28,25,0.3)]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[rgba(0,0,0,0.65)] to-[rgba(0,0,0,0.25)]" />
         <div className="relative z-10 mx-auto w-full max-w-[1120px] px-4">
           <div className="max-w-[700px]">
             <p
-              className="inline-block text-[0.82rem] tracking-[0.08em] uppercase text-[#f5d9a6] mb-3"
+              className="inline-block text-[0.82rem] tracking-[0.08em] uppercase text-[#ffffff] mb-3"
               data-ngf-field="home.heroEyebrow"
               data-ngf-label="Eyebrow"
               data-ngf-type="text"
@@ -148,10 +148,7 @@ export default async function HomePage() {
           </p>
           <div className="grid md:grid-cols-3 gap-6">
             {/* Card 1 — Price Band */}
-            <div className="bg-white border border-[var(--line)] rounded-[14px] p-6 shadow-[0_12px_28px_rgba(0,0,0,0.08)]">
-              <div className="w-10 h-10 rounded-full bg-[var(--brand)] flex items-center justify-center mb-4">
-                <span className="text-white text-sm font-bold">$</span>
-              </div>
+            <div className="bg-white border border-[var(--line)] rounded-[14px] p-6 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
               <h3
                 className="font-serif text-xl mb-2"
                 data-ngf-field="home.serveCard1Title"
@@ -172,10 +169,7 @@ export default async function HomePage() {
               </p>
             </div>
             {/* Card 2 — Property Types */}
-            <div className="bg-white border border-[var(--line)] rounded-[14px] p-6 shadow-[0_12px_28px_rgba(0,0,0,0.08)]">
-              <div className="w-10 h-10 rounded-full bg-[var(--brand)] flex items-center justify-center mb-4">
-                <span className="text-white text-sm font-bold">🏠</span>
-              </div>
+            <div className="bg-white border border-[var(--line)] rounded-[14px] p-6 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
               <h3
                 className="font-serif text-xl mb-2"
                 data-ngf-field="home.serveCard2Title"
@@ -196,10 +190,7 @@ export default async function HomePage() {
               </p>
             </div>
             {/* Card 3 — Outcome */}
-            <div className="bg-white border border-[var(--line)] rounded-[14px] p-6 shadow-[0_12px_28px_rgba(0,0,0,0.08)]">
-              <div className="w-10 h-10 rounded-full bg-[var(--brand)] flex items-center justify-center mb-4">
-                <span className="text-white text-sm font-bold">★</span>
-              </div>
+            <div className="bg-white border border-[var(--line)] rounded-[14px] p-6 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
               <h3
                 className="font-serif text-xl mb-2"
                 data-ngf-field="home.serveCard3Title"
@@ -253,7 +244,7 @@ export default async function HomePage() {
             data-ngf-item-fields='[{"key":"image","label":"Photo","type":"image","aspect":"3:2"},{"key":"title","label":"Project Title","type":"text"}]'
           >
             {defaultRecent.map((item, i) => (
-              <div key={i} className="bg-white border border-[var(--line)] rounded-[14px] overflow-hidden shadow-[0_12px_28px_rgba(0,0,0,0.08)]">
+              <div key={i} className="bg-white border border-[var(--line)] rounded-[14px] overflow-hidden shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
                 <img
                   src={item.image || '/images/staged/staged-15.webp'}
                   alt={item.title || `Staged project ${i + 1}`}
@@ -301,7 +292,7 @@ export default async function HomePage() {
           </h2>
           <div className="grid md:grid-cols-2 gap-8">
             {defaultVideos.map((item, i) => (
-              <div key={i} className="bg-white border border-[var(--line)] rounded-[14px] p-4 shadow-[0_12px_28px_rgba(0,0,0,0.08)]">
+              <div key={i} className="bg-white border border-[var(--line)] rounded-[14px] p-4 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
                 <div className="aspect-video bg-[var(--brand)]/10 border-2 border-dashed border-[var(--brand)]/40 rounded-[10px] flex items-center justify-center mb-3">
                   <span className="text-[var(--brand)] text-sm font-medium">Video Embed Placeholder</span>
                 </div>
@@ -347,9 +338,9 @@ export default async function HomePage() {
             data-ngf-item-fields='[{"key":"photo","label":"Photo","type":"image"},{"key":"name","label":"Name","type":"text"},{"key":"role","label":"Role","type":"text"},{"key":"bio","label":"Bio","type":"textarea"}]'
           >
             {defaultTeam.map((member, i) => (
-              <div key={i} className="bg-white border border-[var(--line)] rounded-[14px] p-5 shadow-[0_12px_28px_rgba(0,0,0,0.08)] text-center">
+              <div key={i} className="bg-white border border-[var(--line)] rounded-[14px] p-5 shadow-[0_1px_2px_rgba(0,0,0,0.04)] text-center">
                 <img
-                  src={member.photo || '/placeholder-person.jpg'}
+                  src={member.photo || '/placeholder-person.svg'}
                   alt={member.name || `Team Member ${i + 1}`}
                   className="w-24 h-24 rounded-full object-cover mx-auto mb-4"
                   data-ngf-field={`team.members.${i}.photo`}
@@ -418,7 +409,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── 7. Featured In ── */}
-      <section className="py-12 bg-[#ece8e0]">
+      <section className="py-12 bg-[#f4f4f4]">
         <div className="mx-auto max-w-[1120px] px-4">
           <h2
             className="font-serif text-xl text-center mb-8 text-[var(--muted)]"
@@ -456,9 +447,9 @@ export default async function HomePage() {
           </h2>
           <div className="grid md:grid-cols-3 gap-6">
             {defaultBlog.map((post, i) => (
-              <div key={i} className="bg-white border border-[var(--line)] rounded-[14px] overflow-hidden shadow-[0_12px_28px_rgba(0,0,0,0.08)]">
+              <div key={i} className="bg-white border border-[var(--line)] rounded-[14px] overflow-hidden shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
                 <img
-                  src={post.image || '/placeholder-blog.jpg'}
+                  src={post.image || '/images/staged/staged-23.webp'}
                   alt={post.title || `Blog Post ${i + 1}`}
                   className="w-full aspect-[16/9] object-cover"
                 />
@@ -469,7 +460,7 @@ export default async function HomePage() {
                     href={post.link || '/blog'}
                     className="text-[var(--brand)] text-sm font-semibold hover:underline min-h-[44px] inline-flex items-center"
                   >
-                    Read More →
+                    Read More
                   </a>
                 </div>
               </div>
@@ -501,7 +492,7 @@ export default async function HomePage() {
           </p>
           <a
             href="/contact"
-            className="inline-flex items-center justify-center px-8 py-3.5 rounded-full bg-white text-[var(--brand)] font-semibold hover:bg-[#ece8e0] transition-colors min-h-[44px]"
+            className="inline-flex items-center justify-center px-8 py-3.5 rounded-full bg-white text-[var(--brand)] font-semibold hover:bg-[#f4f4f4] transition-colors min-h-[44px]"
           >
             Book a Staging Inquiry
           </a>

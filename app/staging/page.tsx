@@ -13,12 +13,12 @@ export default async function StagingPage() {
       {/* ── Hero ── */}
       <section
         className="relative min-h-[42vh] bg-cover bg-center flex items-center text-white"
-        style={{ backgroundImage: `url('${content['staging.heroImage'] || '/placeholder-hero.jpg'}')` }}
+        style={{ backgroundImage: `url('${content['staging.heroImage'] || '/images/staged/staged-11.webp'}')` }}
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-[rgba(12,28,25,0.8)] to-[rgba(12,28,25,0.25)]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[rgba(0,0,0,0.6)] to-[rgba(0,0,0,0.2)]" />
         <div className="relative z-10 mx-auto w-full max-w-[1120px] px-4 max-w-[760px]">
           <p
-            className="inline-block text-[0.82rem] tracking-[0.08em] uppercase text-[#f5d9a6] mb-3"
+            className="inline-block text-[0.82rem] tracking-[0.08em] uppercase text-[#ffffff] mb-3"
             data-ngf-field="staging.heroEyebrow"
             data-ngf-label="Eyebrow"
             data-ngf-type="text"
@@ -53,7 +53,7 @@ export default async function StagingPage() {
 
           <div className="grid md:grid-cols-3 gap-6">
             {/* Why Staging */}
-            <div className="bg-white border border-[var(--line)] rounded-[14px] p-6 shadow-[0_12px_28px_rgba(0,0,0,0.08)]">
+            <div className="bg-white border border-[var(--line)] rounded-[14px] p-6 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
               <div className="w-10 h-10 rounded-full bg-[var(--brand)] flex items-center justify-center mb-4">
                 <span className="text-white font-bold text-sm">1</span>
               </div>
@@ -78,7 +78,7 @@ export default async function StagingPage() {
             </div>
 
             {/* Timeline */}
-            <div className="bg-white border border-[var(--line)] rounded-[14px] p-6 shadow-[0_12px_28px_rgba(0,0,0,0.08)]">
+            <div className="bg-white border border-[var(--line)] rounded-[14px] p-6 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
               <div className="w-10 h-10 rounded-full bg-[var(--brand)] flex items-center justify-center mb-4">
                 <span className="text-white font-bold text-sm">2</span>
               </div>
@@ -98,12 +98,12 @@ export default async function StagingPage() {
                 data-ngf-type="textarea"
                 data-ngf-section="Staging Info Cards"
               >
-                {content['staging.card2Body'] || 'Consultation → Planning & Sourcing → Install Day → Listing Photos → Results. Most installs are completed in one day. We work around your photographer\'s schedule and listing timeline.'}
+                {content['staging.card2Body'] || 'Consultation, then planning and sourcing, install day, listing photos, and results. Most installs are completed in one day. We work around your photographer\'s schedule and listing timeline.'}
               </p>
             </div>
 
             {/* What to Expect */}
-            <div className="bg-white border border-[var(--line)] rounded-[14px] p-6 shadow-[0_12px_28px_rgba(0,0,0,0.08)]">
+            <div className="bg-white border border-[var(--line)] rounded-[14px] p-6 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
               <div className="w-10 h-10 rounded-full bg-[var(--brand)] flex items-center justify-center mb-4">
                 <span className="text-white font-bold text-sm">3</span>
               </div>
@@ -144,7 +144,7 @@ export default async function StagingPage() {
           </h2>
           <div className="grid md:grid-cols-2 gap-8">
             {[0, 1].map((i) => (
-              <div key={i} className="bg-white border border-[var(--line)] rounded-[14px] p-4 shadow-[0_12px_28px_rgba(0,0,0,0.08)]">
+              <div key={i} className="bg-white border border-[var(--line)] rounded-[14px] p-4 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
                 <div className="aspect-video bg-[var(--brand)]/10 border-2 border-dashed border-[var(--brand)]/40 rounded-[10px] flex items-center justify-center mb-3">
                   <span className="text-[var(--brand)] text-sm font-medium">Video Embed Placeholder</span>
                 </div>
@@ -186,7 +186,7 @@ export default async function StagingPage() {
           </p>
           <a
             href="/contact"
-            className="inline-flex items-center justify-center px-8 py-3.5 rounded-full bg-white text-[var(--brand)] font-semibold hover:bg-[#ece8e0] transition-colors min-h-[44px]"
+            className="inline-flex items-center justify-center px-8 py-3.5 rounded-full bg-white text-[var(--brand)] font-semibold hover:bg-[#f4f4f4] transition-colors min-h-[44px]"
           >
             Book a Staging Inquiry
           </a>

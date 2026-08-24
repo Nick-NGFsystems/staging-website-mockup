@@ -39,10 +39,10 @@ export default async function ShopPage() {
         className="relative min-h-[42vh] bg-cover bg-center flex items-center text-white"
         style={{ backgroundImage: `url('${content['shop.heroImage'] || '/images/staged/staged-17.webp'}')` }}
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-[rgba(12,28,25,0.8)] to-[rgba(12,28,25,0.25)]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[rgba(0,0,0,0.6)] to-[rgba(0,0,0,0.2)]" />
         <div className="relative z-10 mx-auto w-full max-w-[1120px] px-4 max-w-[760px]">
           <p
-            className="inline-block text-[0.82rem] tracking-[0.08em] uppercase text-[#f5d9a6] mb-3"
+            className="inline-block text-[0.82rem] tracking-[0.08em] uppercase text-[#ffffff] mb-3"
             data-ngf-field="shop.heroEyebrow"
             data-ngf-label="Eyebrow"
             data-ngf-type="text"
@@ -88,7 +88,7 @@ export default async function ShopPage() {
             {defaultItems.map((item, i) => (
               <div
                 key={i}
-                className="bg-white border border-[var(--line)] rounded-[14px] overflow-hidden shadow-[0_12px_28px_rgba(0,0,0,0.08)]"
+                className="bg-white border border-[var(--line)] rounded-[14px] overflow-hidden shadow-[0_1px_2px_rgba(0,0,0,0.04)]"
               >
                 <img
                   src={item.image || '/images/staged/staged-24.webp'}

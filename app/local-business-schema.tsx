@@ -1,7 +1,7 @@
 /**
  * LocalBusiness structured data (schema.org JSON-LD).
  *
- * ⚠ Only verified facts belong in here. Incorrect NAP (name/address/phone) data
+ * NOTE: Only verified facts belong in here. Incorrect NAP (name/address/phone) data
  * in structured markup actively hurts local SEO, so fields we don't have
  * confirmed yet are intentionally omitted rather than guessed. Fill in the
  * TODOs below once Melissa confirms them, then delete the TODO comments.

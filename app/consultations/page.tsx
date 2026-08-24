@@ -13,12 +13,12 @@ export default async function ConsultationsPage() {
       {/* ── Hero ── */}
       <section
         className="relative min-h-[42vh] bg-cover bg-center flex items-center text-white"
-        style={{ backgroundImage: `url('${content['consultations.heroImage'] || '/placeholder-hero.jpg'}')` }}
+        style={{ backgroundImage: `url('${content['consultations.heroImage'] || '/images/staged/staged-21.webp'}')` }}
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-[rgba(12,28,25,0.8)] to-[rgba(12,28,25,0.25)]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[rgba(0,0,0,0.6)] to-[rgba(0,0,0,0.2)]" />
         <div className="relative z-10 mx-auto w-full max-w-[1120px] px-4 max-w-[760px]">
           <p
-            className="inline-block text-[0.82rem] tracking-[0.08em] uppercase text-[#f5d9a6] mb-3"
+            className="inline-block text-[0.82rem] tracking-[0.08em] uppercase text-[#ffffff] mb-3"
             data-ngf-field="consultations.heroEyebrow"
             data-ngf-label="Eyebrow"
             data-ngf-type="text"
@@ -64,7 +64,7 @@ export default async function ConsultationsPage() {
 
           {/* Two-column: What's Included + Who Benefits */}
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-white border border-[var(--line)] rounded-[14px] p-8 shadow-[0_12px_28px_rgba(0,0,0,0.08)]">
+            <div className="bg-white border border-[var(--line)] rounded-[14px] p-8 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
               <h3
                 className="font-serif text-xl mb-5"
                 data-ngf-field="consultations.includedTitle"
@@ -87,7 +87,7 @@ export default async function ConsultationsPage() {
               </div>
             </div>
 
-            <div className="bg-white border border-[var(--line)] rounded-[14px] p-8 shadow-[0_12px_28px_rgba(0,0,0,0.08)]">
+            <div className="bg-white border border-[var(--line)] rounded-[14px] p-8 shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
               <h3
                 className="font-serif text-xl mb-5"
                 data-ngf-field="consultations.benefitsTitle"
@@ -125,7 +125,7 @@ export default async function ConsultationsPage() {
           </h2>
           <div className="grid md:grid-cols-3 gap-6">
             {/* Step 1 */}
-            <div className="bg-white border border-[var(--line)] rounded-[14px] p-6 shadow-[0_12px_28px_rgba(0,0,0,0.08)] text-center">
+            <div className="bg-white border border-[var(--line)] rounded-[14px] p-6 shadow-[0_1px_2px_rgba(0,0,0,0.04)] text-center">
               <div className="w-12 h-12 rounded-full bg-[var(--brand)] text-white font-bold text-lg flex items-center justify-center mx-auto mb-4">
                 1
               </div>
@@ -149,7 +149,7 @@ export default async function ConsultationsPage() {
               </p>
             </div>
             {/* Step 2 */}
-            <div className="bg-white border border-[var(--line)] rounded-[14px] p-6 shadow-[0_12px_28px_rgba(0,0,0,0.08)] text-center">
+            <div className="bg-white border border-[var(--line)] rounded-[14px] p-6 shadow-[0_1px_2px_rgba(0,0,0,0.04)] text-center">
               <div className="w-12 h-12 rounded-full bg-[var(--brand)] text-white font-bold text-lg flex items-center justify-center mx-auto mb-4">
                 2
               </div>
@@ -173,7 +173,7 @@ export default async function ConsultationsPage() {
               </p>
             </div>
             {/* Step 3 */}
-            <div className="bg-white border border-[var(--line)] rounded-[14px] p-6 shadow-[0_12px_28px_rgba(0,0,0,0.08)] text-center">
+            <div className="bg-white border border-[var(--line)] rounded-[14px] p-6 shadow-[0_1px_2px_rgba(0,0,0,0.04)] text-center">
               <div className="w-12 h-12 rounded-full bg-[var(--brand)] text-white font-bold text-lg flex items-center justify-center mx-auto mb-4">
                 3
               </div>
@@ -223,7 +223,7 @@ export default async function ConsultationsPage() {
           </p>
           <a
             href="/contact"
-            className="inline-flex items-center justify-center px-8 py-3.5 rounded-full bg-white text-[var(--brand)] font-semibold hover:bg-[#ece8e0] transition-colors min-h-[44px]"
+            className="inline-flex items-center justify-center px-8 py-3.5 rounded-full bg-white text-[var(--brand)] font-semibold hover:bg-[#f4f4f4] transition-colors min-h-[44px]"
           >
             Book a Consultation
           </a>
