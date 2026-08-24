@@ -20,13 +20,17 @@
 
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden;
+  /* MUST be `clip`, not `hidden`. `overflow-x: hidden` turns this element into
+     a scroll container, which silently breaks `position: sticky` on the header
+     (it stops pinning to the viewport, so the nav never slides back on scroll
+     up). `clip` prevents horizontal scrolling without that side effect. */
+  overflow-x: clip;
 }
 
 body {
   background: var(--bg);
   color: var(--ink);
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 h1, h2, h3, h4 {
