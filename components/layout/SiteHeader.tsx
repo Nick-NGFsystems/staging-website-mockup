@@ -17,10 +17,27 @@ const aboutLinks = [
 
 /** Scroll distance (px) ignored before we start hiding, so small nudges don't flicker. */
 const HIDE_THRESHOLD = 8
-/** Never hide the nav tier while within this distance of the top of the page. */
-const TOP_ZONE = 120
-/** The utility tier shows only while genuinely at the top of the page. */
-const AT_TOP = 24
+/**
+ * Never hide the nav tier while within this distance of the top.
+ *
+ * Must stay comfortably above COLLAPSE_AT + the utility tier's height (80 + 48),
+ * otherwise the scroll jump caused by that tier collapsing reads as a large
+ * downward delta and yanks the nav out of view.
+ */
+const TOP_ZONE = 160
+/**
+ * The utility tier uses hysteresis — two thresholds with a dead zone between
+ * them — rather than a single cutoff.
+ *
+ * The tier sits in the layout flow, so expanding it makes the document ~40px
+ * taller and the browser compensates the scroll offset. With one threshold that
+ * compensation pushes the offset straight back across the line, collapsing the
+ * tier, which shifts the layout back again: the bar visibly flickers. Requiring
+ * a return to the very top to expand, but a decent scroll to collapse, means no
+ * layout shift can ever bounce it across both thresholds.
+ */
+const EXPAND_AT = 8
+const COLLAPSE_AT = 80
 
 export function SiteHeader({ content }: Props) {
   const pathname = usePathname()
@@ -41,14 +58,17 @@ export function SiteHeader({ content }: Props) {
   // a stale value, and rAF-throttles to stay off the scroll path.
   useEffect(() => {
     lastY.current = window.scrollY
-    setAtTop(window.scrollY <= AT_TOP)
+    setAtTop(window.scrollY <= EXPAND_AT)
     let ticking = false
 
     const update = () => {
       const y = window.scrollY
       const delta = y - lastY.current
 
-      setAtTop(y <= AT_TOP)
+      // Hysteresis: once expanded, stay expanded until well clear of the top;
+      // once collapsed, only re-expand at the very top. Functional update so we
+      // read the live value without re-subscribing the listener.
+      setAtTop(prev => (prev ? y <= COLLAPSE_AT : y <= EXPAND_AT))
 
       if (Math.abs(delta) > HIDE_THRESHOLD) {
         // Any upward scroll reveals immediately; near the top always reveals.
