@@ -99,8 +99,8 @@ export const PROJECT_ITEM_FIELDS = JSON.stringify([
   { key: 'salesContact', label: 'Sales Contact', type: 'text' },
   { key: 'photographer', label: 'Photographer Credit', type: 'text' },
   { key: 'agent', label: 'Listing Agent Credit', type: 'text' },
-  { key: 'photo1', label: 'Gallery Photo 1', type: 'image' },
-  { key: 'photo2', label: 'Gallery Photo 2', type: 'image' },
-  { key: 'photo3', label: 'Gallery Photo 3', type: 'image' },
-  { key: 'photo4', label: 'Gallery Photo 4', type: 'image' },
+  { key: 'photo1', label: 'Gallery Photo 1', type: 'image', aspect: '4:3' },
+  { key: 'photo2', label: 'Gallery Photo 2', type: 'image', aspect: '4:3' },
+  { key: 'photo3', label: 'Gallery Photo 3', type: 'image', aspect: '4:3' },
+  { key: 'photo4', label: 'Gallery Photo 4', type: 'image', aspect: '4:3' },
 ])

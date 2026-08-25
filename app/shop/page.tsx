@@ -66,7 +66,7 @@ export default async function ShopPage() {
           <div
             className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
             data-ngf-group="shop.items"
-            data-ngf-item-fields='[{"key":"image","label":"Product Image","type":"image"},{"key":"name","label":"Item Name","type":"text"},{"key":"description","label":"Description","type":"textarea"},{"key":"price","label":"Price","type":"text"}]'
+            data-ngf-item-fields='[{"key":"image","label":"Product Image","type":"image","aspect":"4:3"},{"key":"name","label":"Item Name","type":"text"},{"key":"description","label":"Description","type":"textarea"},{"key":"price","label":"Price","type":"text"}]'
           >
             {defaultItems.map((item, i) => (
               <div

@@ -44,7 +44,7 @@ export default function HeroCarousel({
           data-ngf-item-label="Slide"
           data-ngf-min-items="1"
           data-ngf-max-items="8"
-          data-ngf-item-fields='[{"key":"image","label":"Slide Image","type":"image"}]'
+          data-ngf-item-fields='[{"key":"image","label":"Slide Image","type":"image","aspect":"16:9"}]'
         >
           {slides.map((s, i) => (
             <div key={i} className="carousel-slide" data-active={i === active}>

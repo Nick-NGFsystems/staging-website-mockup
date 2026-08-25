@@ -49,7 +49,7 @@ export default async function BlogPage() {
           <div
             className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
             data-ngf-group="blog.posts"
-            data-ngf-item-fields='[{"key":"image","label":"Cover Image","type":"image"},{"key":"title","label":"Title","type":"text"},{"key":"summary","label":"Summary","type":"textarea"},{"key":"link","label":"Post Link","type":"text"}]'
+            data-ngf-item-fields='[{"key":"image","label":"Cover Image","type":"image","aspect":"3:2"},{"key":"title","label":"Title","type":"text"},{"key":"summary","label":"Summary","type":"textarea"},{"key":"link","label":"Post Link","type":"text"}]'
           >
             {defaultPosts.map((post, i) => (
               <div

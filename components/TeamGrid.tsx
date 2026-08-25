@@ -33,7 +33,7 @@ export function TeamGrid({
       data-ngf-item-label="Team Member"
       data-ngf-min-items="1"
       data-ngf-max-items="24"
-      data-ngf-item-fields='[{"key":"photo","label":"Photo","type":"image"},{"key":"name","label":"Name","type":"text"},{"key":"role","label":"Role","type":"text"},{"key":"bio","label":"Bio","type":"textarea"}]'
+      data-ngf-item-fields='[{"key":"photo","label":"Photo","type":"image","aspect":"3:4"},{"key":"name","label":"Name","type":"text"},{"key":"role","label":"Role","type":"text"},{"key":"bio","label":"Bio","type":"textarea"}]'
     >
       {members.map((member, i) => (
         <article key={i} className="group">
