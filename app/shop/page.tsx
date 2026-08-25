@@ -1,4 +1,6 @@
 import { getNgfContent, getItems } from '@/lib/ngf'
+import { PageHero } from '@/components/PageHero'
+import { Lightbox, ZoomImage } from '@/components/Lightbox'
 
 export const metadata = {
   title: 'Shop',
@@ -34,33 +36,13 @@ export default async function ShopPage() {
 
   return (
     <main id="main-content">
-      {/* ── Hero ── */}
-      <section
-        className="relative min-h-[42vh] bg-cover bg-center flex items-center text-white"
-        style={{ backgroundImage: `url('${content['shop.heroImage'] || '/images/staged/staged-17.webp'}')` }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-[rgba(0,0,0,0.6)] to-[rgba(0,0,0,0.2)]" />
-        <div className="relative z-10 mx-auto w-full max-w-[1120px] px-4 max-w-[760px]">
-          <p
-            className="inline-block text-[0.82rem] tracking-[0.08em] uppercase text-[#ffffff] mb-3"
-            data-ngf-field="shop.heroEyebrow"
-            data-ngf-label="Eyebrow"
-            data-ngf-type="text"
-            data-ngf-section="Page Hero"
-          >
-            {content['shop.heroEyebrow'] || 'Shop'}
-          </p>
-          <h1
-            className="font-serif text-[clamp(2rem,4vw,3.5rem)]"
-            data-ngf-field="shop.heroHeadline"
-            data-ngf-label="Headline"
-            data-ngf-type="text"
-            data-ngf-section="Page Hero"
-          >
-            {content['shop.heroHeadline'] || 'Furniture & Accessories For Sale'}
-          </h1>
-        </div>
-      </section>
+      <PageHero
+        prefix="shop"
+        content={content}
+        defaultImage="/images/staged/staged-17.webp"
+        defaultEyebrow={'Shop'}
+        defaultHeadline={'Furniture & Accessories For Sale'}
+      />
 
       {/* ── Intro ── */}
       <section className="py-10 md:py-14">
@@ -80,6 +62,7 @@ export default async function ShopPage() {
       {/* ── Shop Grid ── */}
       <section className="pb-16 md:pb-24">
         <div className="mx-auto max-w-[1120px] px-4">
+          <Lightbox>
           <div
             className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
             data-ngf-group="shop.items"
@@ -90,15 +73,14 @@ export default async function ShopPage() {
                 key={i}
                 className="bg-white border border-[var(--line)] rounded-[14px] overflow-hidden shadow-[0_1px_2px_rgba(0,0,0,0.04)]"
               >
-                <img
+                <ZoomImage
                   src={item.image || '/images/staged/staged-24.webp'}
-                  alt={item.name || `Product ${i + 1}`}
+                  alt={content[`shop.items.${i}.image_alt`] || item.name || `Product ${i + 1}`}
                   className="w-full aspect-[4/3] object-cover"
-                  data-ngf-field={`shop.items.${i}.image`}
-                  data-ngf-label="Product Image"
-                  data-ngf-type="image"
-                  data-ngf-section="Shop"
-                  data-ngf-aspect="4:3"
+                  ngfField={`shop.items.${i}.image`}
+                  ngfLabel="Product Image"
+                  ngfSection="Shop"
+                  ngfAspect="4:3"
                 />
                 <div className="p-5">
                   <h3
@@ -140,6 +122,7 @@ export default async function ShopPage() {
               </div>
             ))}
           </div>
+          </Lightbox>
         </div>
       </section>
     </main>

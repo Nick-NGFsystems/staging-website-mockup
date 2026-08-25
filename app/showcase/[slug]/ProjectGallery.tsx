@@ -1,8 +1,12 @@
 'use client'
 import { useState } from 'react'
+import { PhotoProvider, PhotoView } from 'react-photo-view'
+import 'react-photo-view/dist/react-photo-view.css'
 
 export type GalleryImage = {
   src: string
+  /** Editable alt text (NGF `<field>_alt` convention). */
+  alt?: string
   /** NGF field path for this slot, e.g. showcase.projects.2.photo1 */
   field: string
   label: string
@@ -24,9 +28,9 @@ export default function ProjectGallery({
   title: string
 }) {
   const [active, setActive] = useState(0)
-  const current = images[active] ?? images[0]
 
   return (
+    <PhotoProvider>
     <div className="flex flex-col-reverse md:flex-row gap-3 md:gap-4 min-w-0">
       {/* Thumbnails */}
       {/* On phones this is a horizontal scroller. It stays inside the page
@@ -47,25 +51,32 @@ export default function ProjectGallery({
           >
             <img
               src={img.src}
-              alt={`${title} — thumbnail ${i + 1}`}
+              alt={img.alt || `${title} — thumbnail ${i + 1}`}
               data-ngf-field={img.field}
               data-ngf-label={img.label}
               data-ngf-type="image"
               data-ngf-section="Showcase Portfolio"
+              data-ngf-aspect="4:3"
               className="w-full h-full object-cover"
             />
           </button>
         ))}
       </div>
 
-      {/* Main viewer */}
+      {/* Main viewer — each image is a PhotoView so the modal opens as a
+          navigable gallery; only the active one is visible. */}
       <div className="flex-1 min-w-0 bg-[#f4f4f4] overflow-hidden">
-        <img
-          src={current?.src}
-          alt={title}
-          className="w-full aspect-[4/3] object-cover"
-        />
+        {images.map((img, i) => (
+          <PhotoView key={img.field} src={img.src}>
+            <img
+              src={img.src}
+              alt={img.alt || title}
+              className={`w-full aspect-[4/3] object-cover cursor-zoom-in ${i === active ? '' : 'hidden'}`}
+            />
+          </PhotoView>
+        ))}
       </div>
     </div>
+    </PhotoProvider>
   )
 }

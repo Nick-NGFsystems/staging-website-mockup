@@ -55,6 +55,7 @@ export default function HeroCarousel({
                 data-ngf-label="Slide Image"
                 data-ngf-type="image"
                 data-ngf-section="Hero"
+                data-ngf-aspect="16:9"
                 className="w-full h-full object-cover"
               />
             </div>

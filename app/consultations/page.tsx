@@ -1,4 +1,5 @@
 import { getNgfContent } from '@/lib/ngf'
+import { PageHero } from '@/components/PageHero'
 
 export const metadata = {
   title: 'Home Edit Consultations',
@@ -10,33 +11,13 @@ export default async function ConsultationsPage() {
 
   return (
     <main id="main-content">
-      {/* ── Hero ── */}
-      <section
-        className="relative min-h-[42vh] bg-cover bg-center flex items-center text-white"
-        style={{ backgroundImage: `url('${content['consultations.heroImage'] || '/images/staged/staged-21.webp'}')` }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-[rgba(0,0,0,0.6)] to-[rgba(0,0,0,0.2)]" />
-        <div className="relative z-10 mx-auto w-full max-w-[1120px] px-4 max-w-[760px]">
-          <p
-            className="inline-block text-[0.82rem] tracking-[0.08em] uppercase text-[#ffffff] mb-3"
-            data-ngf-field="consultations.heroEyebrow"
-            data-ngf-label="Eyebrow"
-            data-ngf-type="text"
-            data-ngf-section="Page Hero"
-          >
-            {content['consultations.heroEyebrow'] || 'Consultations'}
-          </p>
-          <h1
-            className="font-serif text-[clamp(2rem,4vw,3.5rem)]"
-            data-ngf-field="consultations.heroHeadline"
-            data-ngf-label="Headline"
-            data-ngf-type="text"
-            data-ngf-section="Page Hero"
-          >
-            {content['consultations.heroHeadline'] || 'Home Edit Consultations'}
-          </h1>
-        </div>
-      </section>
+      <PageHero
+        prefix="consultations"
+        content={content}
+        defaultImage="/images/staged/staged-21.webp"
+        defaultEyebrow={'Consultations'}
+        defaultHeadline={'Home Edit Consultations'}
+      />
 
       {/* ── Intro ── */}
       <section className="py-16 md:py-24">

@@ -1,6 +1,7 @@
 import { getNgfContent, getItems } from '@/lib/ngf'
 import HeroCarousel, { type HeroSlide } from '@/components/HeroCarousel'
 import { TeamGrid } from '@/components/TeamGrid'
+import { Lightbox, ZoomImage } from '@/components/Lightbox'
 
 const DEFAULT_HERO: HeroSlide[] = [
   { image: '/images/hero.webp', alt: 'Staged living room' },
@@ -247,6 +248,7 @@ export default async function HomePage() {
           >
             {content['home.recentIntro'] || 'See the difference professional staging makes.'}
           </p>
+          <Lightbox>
           <div
             className="grid md:grid-cols-3 gap-6"
             data-ngf-group="home.recent"
@@ -257,15 +259,14 @@ export default async function HomePage() {
           >
             {defaultRecent.map((item, i) => (
               <div key={i} className="bg-white border border-[var(--line)] rounded-[14px] overflow-hidden shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
-                <img
+                <ZoomImage
                   src={item.image || '/images/staged/staged-15.webp'}
-                  alt={item.title || `Staged project ${i + 1}`}
+                  alt={content[`home.recent.${i}.image_alt`] || item.title || `Staged project ${i + 1}`}
                   className="w-full aspect-[3/2] object-cover"
-                  data-ngf-field={`home.recent.${i}.image`}
-                  data-ngf-label="Photo"
-                  data-ngf-type="image"
-                  data-ngf-section="Recent Staging"
-                  data-ngf-aspect="3:2"
+                  ngfField={`home.recent.${i}.image`}
+                  ngfLabel="Photo"
+                  ngfSection="Recent Staging"
+                  ngfAspect="3:2"
                 />
                 <h3
                   className="font-serif text-lg p-4"
@@ -279,6 +280,7 @@ export default async function HomePage() {
               </div>
             ))}
           </div>
+          </Lightbox>
           <div className="text-center mt-12">
             <a
               href="/showcase"
@@ -427,7 +429,7 @@ export default async function HomePage() {
               <div key={i} className="bg-white border border-[var(--line)] rounded-[14px] overflow-hidden shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
                 <img
                   src={post.image || '/images/staged/staged-23.webp'}
-                  alt={post.title || `Blog Post ${i + 1}`}
+                  alt={content[`blog.posts.${i}.image_alt`] || post.title || `Blog Post ${i + 1}`}
                   className="w-full aspect-[16/9] object-cover"
                 />
                 <div className="p-5">

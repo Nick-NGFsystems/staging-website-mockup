@@ -9,6 +9,8 @@ export type Project = {
   description: string
   category: string
   image: string
+  /** Editable alt text (NGF `<field>_alt` convention). */
+  imageAlt: string
   /** Detail-page fields. Blank by default — the client fills these in. */
   location: string
   stats: string
@@ -72,6 +74,7 @@ export function getProjects(
       description: row.description || '',
       category: row.category || '',
       image: row.image || '/images/staged/staged-15.webp',
+      imageAlt: row.image_alt || '',
       location: row.location || '',
       stats: row.stats || '',
       designer: row.designer || '',

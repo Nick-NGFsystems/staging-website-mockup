@@ -1,4 +1,5 @@
 import type { NgfSiteContent } from '@/lib/ngf'
+import { Lightbox, ZoomImage } from '@/components/Lightbox'
 
 export type TeamMember = {
   photo?: string
@@ -25,6 +26,7 @@ export function TeamGrid({
   showBio?: boolean
 }) {
   return (
+    <Lightbox>
     <div
       className="grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3"
       data-ngf-group="team.members"
@@ -37,13 +39,13 @@ export function TeamGrid({
         <article key={i} className="group">
           {/* The image is the card — 3:4 portrait, full width */}
           <div className="relative overflow-hidden bg-[#f4f4f4] aspect-[3/4]">
-            <img
+            <ZoomImage
               src={content[`team.members.${i}.photo`] || member.photo || '/placeholder-person.svg'}
-              alt={content[`team.members.${i}.name`] || member.name || 'Team member'}
-              data-ngf-field={`team.members.${i}.photo`}
-              data-ngf-label="Photo"
-              data-ngf-type="image"
-              data-ngf-section="Team"
+              alt={content[`team.members.${i}.photo_alt`] || content[`team.members.${i}.name`] || member.name || 'Team member'}
+              ngfField={`team.members.${i}.photo`}
+              ngfLabel="Photo"
+              ngfSection="Team"
+              ngfAspect="3:4"
               className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
             />
           </div>
@@ -82,5 +84,6 @@ export function TeamGrid({
         </article>
       ))}
     </div>
+    </Lightbox>
   )
 }

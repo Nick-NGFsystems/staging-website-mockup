@@ -9,6 +9,8 @@ import 'react-photo-view/dist/react-photo-view.css'
 export type GalleryPhoto = {
   image: string
   caption: string
+  /** Editable alt text (NGF `<field>_alt` convention). */
+  alt?: string
 }
 
 const FILTERS = ['All', 'New Construction', '$250K–$500K', '$500K–$1M', '$1M–$2M']
@@ -66,7 +68,7 @@ export default function ShowcaseGrid({
                   <Link href={`/showcase/${project.slug}`} className="block overflow-hidden">
                   <img
                     src={project.image || '/images/staged/staged-15.webp'}
-                    alt={project.title || `Staged project ${i + 1}`}
+                    alt={project.imageAlt || project.title || `Staged project ${i + 1}`}
                     className="w-full aspect-[3/2] object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                     data-ngf-field={`showcase.projects.${i}.image`}
                     data-ngf-label="Photo"
@@ -147,7 +149,7 @@ export default function ShowcaseGrid({
                 <PhotoView key={i} src={photo.image}>
                   <img
                     src={photo.image}
-                    alt={photo.caption || `Staged space ${i + 1}`}
+                    alt={photo.alt || photo.caption || `Staged space ${i + 1}`}
                     className="w-full aspect-[3/2] object-cover rounded-[10px] cursor-zoom-in"
                     data-ngf-field={`showcase.gallery.${i}.image`}
                     data-ngf-label="Photo"

@@ -2,6 +2,7 @@ import { getNgfContent, getItems } from '@/lib/ngf'
 import ShowcaseGrid, { type GalleryPhoto } from './ShowcaseGrid'
 import { getProjects } from '@/lib/projects'
 import { DEFAULT_PROJECTS } from './projects-data'
+import { PageHero } from '@/components/PageHero'
 
 export const metadata = {
   title: 'Staging Showcase',
@@ -23,39 +24,19 @@ export default async function ShowcasePage() {
   const projects = getProjects(content, DEFAULT_PROJECTS)
 
   const galleryItems = getItems(content, 'showcase.gallery')
-  const gallery = galleryItems.length > 0
-    ? (galleryItems as GalleryPhoto[])
+  const gallery: GalleryPhoto[] = galleryItems.length > 0
+    ? galleryItems.map((g) => ({ image: g.image, caption: g.caption || '', alt: g.image_alt || '' }))
     : DEFAULT_GALLERY
 
   return (
     <main id="main-content">
-      {/* ── Hero ── */}
-      <section
-        className="relative min-h-[42vh] bg-cover bg-center flex items-center text-white"
-        style={{ backgroundImage: `url('${content['showcase.heroImage'] || '/images/staged/staged-15.webp'}')` }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-[rgba(0,0,0,0.6)] to-[rgba(0,0,0,0.2)]" />
-        <div className="relative z-10 mx-auto w-full max-w-[760px] px-4">
-          <p
-            className="inline-block text-[0.82rem] tracking-[0.08em] uppercase text-[#ffffff] mb-3"
-            data-ngf-field="showcase.heroEyebrow"
-            data-ngf-label="Eyebrow"
-            data-ngf-type="text"
-            data-ngf-section="Page Hero"
-          >
-            {content['showcase.heroEyebrow'] || 'Staging Showcase'}
-          </p>
-          <h1
-            className="font-serif text-[clamp(2rem,4vw,3.5rem)]"
-            data-ngf-field="showcase.heroHeadline"
-            data-ngf-label="Headline"
-            data-ngf-type="text"
-            data-ngf-section="Page Hero"
-          >
-            {content['showcase.heroHeadline'] || 'Our Portfolio'}
-          </h1>
-        </div>
-      </section>
+      <PageHero
+        prefix="showcase"
+        content={content}
+        defaultImage="/images/staged/staged-15.webp"
+        defaultEyebrow={'Staging Showcase'}
+        defaultHeadline={'Our Portfolio'}
+      />
 
       <ShowcaseGrid projects={projects} gallery={gallery} />
     </main>

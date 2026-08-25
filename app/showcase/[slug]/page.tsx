@@ -39,6 +39,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
   const images: GalleryImage[] = [
     {
       src: project.image,
+      alt: project.imageAlt || project.title,
       field: `showcase.projects.${i}.image`,
       label: 'Cover Photo',
     },

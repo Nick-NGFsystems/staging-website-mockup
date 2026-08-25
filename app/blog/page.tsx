@@ -1,4 +1,5 @@
 import { getNgfContent, getItems } from '@/lib/ngf'
+import { PageHero } from '@/components/PageHero'
 
 export const metadata = {
   title: 'Blog',
@@ -34,33 +35,13 @@ export default async function BlogPage() {
 
   return (
     <main id="main-content">
-      {/* ── Hero ── */}
-      <section
-        className="relative min-h-[42vh] bg-cover bg-center flex items-center text-white"
-        style={{ backgroundImage: `url('${content['blog.heroImage'] || '/images/staged/staged-02.webp'}')` }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-[rgba(0,0,0,0.6)] to-[rgba(0,0,0,0.2)]" />
-        <div className="relative z-10 mx-auto w-full max-w-[1120px] px-4 max-w-[760px]">
-          <p
-            className="inline-block text-[0.82rem] tracking-[0.08em] uppercase text-[#ffffff] mb-3"
-            data-ngf-field="blog.heroEyebrow"
-            data-ngf-label="Eyebrow"
-            data-ngf-type="text"
-            data-ngf-section="Page Hero"
-          >
-            {content['blog.heroEyebrow'] || 'Blog'}
-          </p>
-          <h1
-            className="font-serif text-[clamp(2rem,4vw,3.5rem)]"
-            data-ngf-field="blog.heroHeadline"
-            data-ngf-label="Headline"
-            data-ngf-type="text"
-            data-ngf-section="Page Hero"
-          >
-            {content['blog.heroHeadline'] || 'Home Edit Tips & Insights'}
-          </h1>
-        </div>
-      </section>
+      <PageHero
+        prefix="blog"
+        content={content}
+        defaultImage="/images/staged/staged-02.webp"
+        defaultEyebrow={'Blog'}
+        defaultHeadline={'Home Edit Tips & Insights'}
+      />
 
       {/* ── Blog Grid ── */}
       <section className="py-16 md:py-24">
@@ -77,12 +58,13 @@ export default async function BlogPage() {
               >
                 <img
                   src={post.image || '/images/staged/staged-23.webp'}
-                  alt={post.title || `Blog Post ${i + 1}`}
+                  alt={content[`blog.posts.${i}.image_alt`] || post.title || `Blog Post ${i + 1}`}
                   className="w-full aspect-[16/9] object-cover"
                   data-ngf-field={`blog.posts.${i}.image`}
                   data-ngf-label="Cover Image"
                   data-ngf-type="image"
                   data-ngf-section="Blog"
+                  data-ngf-aspect="3:2"
                 />
                 <div className="p-5">
                   <h2
