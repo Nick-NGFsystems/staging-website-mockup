@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import type { NgfSiteContent } from '@/lib/ngf'
+import { CookieSettingsButton } from '@/components/CookieSettingsButton'
 
 interface Props {
   content: NgfSiteContent
@@ -84,9 +85,12 @@ export function SiteFooter({ content }: Props) {
           <p className="text-[0.78rem] text-[var(--muted)]">
             © {year} {businessName}. All rights reserved.
           </p>
-          <Link href="/privacy" className="text-[0.78rem] text-[var(--muted)] hover:text-[var(--ink)] hover:underline underline-offset-4">
-            Privacy &amp; Cookie Policy
-          </Link>
+          <div className="flex items-center gap-5">
+            <Link href="/privacy" className="text-[0.78rem] text-[var(--muted)] hover:text-[var(--ink)] hover:underline underline-offset-4">
+              Privacy &amp; Cookie Policy
+            </Link>
+            <CookieSettingsButton className="text-[0.78rem] text-[var(--muted)] hover:text-[var(--ink)] hover:underline underline-offset-4" />
+          </div>
         </div>
       </div>
     </footer>

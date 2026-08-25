@@ -4,6 +4,8 @@ import NgfEditBridge from '@/components/NgfEditBridge'
 import { getNgfContent } from '@/lib/ngf'
 import { PageChrome } from '@/components/layout/PageChrome'
 import { LocalBusinessSchema } from '@/app/local-business-schema'
+import GoogleAnalytics from '@/components/GoogleAnalytics'
+import CookieConsent from '@/components/CookieConsent'
 import './globals.css'
 
 const inter = Inter({
@@ -57,9 +59,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         className={`${inter.variable} ${playfair.variable} font-sans antialiased bg-[var(--bg)] text-[var(--ink)]`}
       >
         <a href="#main-content" className="skip-link">Skip to content</a>
+        <GoogleAnalytics />
         <LocalBusinessSchema />
         <NgfEditBridge />
         <PageChrome content={content}>{children}</PageChrome>
+        <CookieConsent />
       </body>
     </html>
   )

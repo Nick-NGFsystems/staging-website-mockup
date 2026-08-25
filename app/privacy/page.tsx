@@ -25,6 +25,8 @@ export default async function PrivacyPolicyPage() {
   const contactPhone = content['brand.phone'] || ''
   const contactAddress = content['contact.address'] || ''
   const contactLine = contactEmail || 'the contact form on this website'
+  // Describe only what this build actually loads — see NEXT_PUBLIC_COOKIE_ANALYTICS.
+  const cookieAnalytics = process.env.NEXT_PUBLIC_COOKIE_ANALYTICS === '1'
 
   return (
     <div className="min-h-screen" style={{ color: '#1f2937' }}>
@@ -70,7 +72,9 @@ export default async function PrivacyPolicyPage() {
                 sends us the notification.</li>
               <li><strong>Email delivery</strong> — Resend, used to email us your submission.</li>
               <li><strong>Website hosting</strong> — Vercel.</li>
-              <li><strong>Analytics</strong> — used to measure site traffic and performance.</li>
+              {cookieAnalytics && (
+                <li><strong>Analytics</strong> — used to measure site traffic and performance.</li>
+              )}
             </ul>
             <p className="mt-2">We may also disclose information if required by law or to protect our rights.</p>
           </section>
@@ -80,9 +84,16 @@ export default async function PrivacyPolicyPage() {
             <p className="mt-2">Cookies are small files stored on your device. This site may use:</p>
             <ul className="mt-2 list-disc space-y-1 pl-5">
               <li><strong>Essential cookies</strong>, needed for the site to function.</li>
-              <li><strong>Analytics cookies</strong>, which help us understand site usage (only if analytics that use
-                cookies are enabled).</li>
+              {cookieAnalytics && (
+                <li><strong>Analytics cookies</strong>, which help us understand how the site is used. These are only
+                  set after you accept them, and you can change your choice at any time using the
+                  &ldquo;Cookie Settings&rdquo; link in the footer.</li>
+              )}
             </ul>
+            {!cookieAnalytics && (
+              <p className="mt-2">This site does not currently use analytics or advertising cookies, so no cookie
+                consent banner is shown.</p>
+            )}
             <p className="mt-2">You can control or delete cookies through your browser settings. Blocking some cookies
               may affect how the site works.</p>
           </section>
