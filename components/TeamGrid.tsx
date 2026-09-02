@@ -1,89 +1,64 @@
-import type { NgfSiteContent } from '@/lib/ngf'
-import { Lightbox, ZoomImage } from '@/components/Lightbox'
-
-export type TeamMember = {
-  photo?: string
-  name?: string
-  role?: string
-  bio?: string
-}
+import Link from 'next/link'
+import { TEAM_ITEM_FIELDS, type TeamMember } from '@/lib/team'
 
 /**
  * Full-bleed portrait team cards (Vesta "Creative Directors" pattern): the
- * photograph is the card, with the name and role set beneath it. No cropped
- * circular headshots, no icons.
+ * photograph is the card, name and role beneath, and the whole card opens that
+ * person's bio page.
  *
- * Shared by the home page preview and the full /team page so the two always
- * look identical. `showBio` is the only difference between them.
+ * No lightbox here — the card is a link, so a zoom-on-click would fight the
+ * navigation. (NGF-STANDARDS exempts images that are already interactive.)
+ *
+ * Shared by the home-page preview and /team so the two can never drift.
  */
-export function TeamGrid({
-  members,
-  content,
-  showBio = false,
-}: {
-  members: TeamMember[]
-  content: NgfSiteContent
-  showBio?: boolean
-}) {
+export function TeamGrid({ members }: { members: TeamMember[] }) {
   return (
-    <Lightbox>
     <div
       className="grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3"
       data-ngf-group="team.members"
       data-ngf-item-label="Team Member"
       data-ngf-min-items="1"
       data-ngf-max-items="24"
-      data-ngf-item-fields='[{"key":"photo","label":"Photo","type":"image","aspect":"3:4"},{"key":"name","label":"Name","type":"text"},{"key":"role","label":"Role","type":"text"},{"key":"bio","label":"Bio","type":"textarea"}]'
+      data-ngf-item-fields={TEAM_ITEM_FIELDS}
     >
-      {members.map((member, i) => (
-        <article key={i} className="group">
-          {/* The image is the card — 3:4 portrait, full width */}
-          <div className="relative overflow-hidden bg-[#f4f4f4] aspect-[3/4]">
-            <ZoomImage
-              src={content[`team.members.${i}.photo`] || member.photo || '/placeholder-person.svg'}
-              alt={content[`team.members.${i}.photo_alt`] || content[`team.members.${i}.name`] || member.name || 'Team member'}
-              ngfField={`team.members.${i}.photo`}
-              ngfLabel="Photo"
-              ngfSection="Team"
-              ngfAspect="3:4"
-              className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-            />
-          </div>
+      {members.map(member => (
+        <article key={member.slug} className="group">
+          <Link href={`/team/${member.slug}`} className="block">
+            <div className="relative overflow-hidden bg-[#f4f4f4] aspect-[3/4]">
+              <img
+                src={member.photo}
+                alt={member.photoAlt || member.name}
+                data-ngf-field={`team.members.${member.index}.photo`}
+                data-ngf-label="Photo"
+                data-ngf-type="image"
+                data-ngf-section="Team"
+                data-ngf-aspect="3:4"
+                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+              />
+            </div>
 
-          <h3
-            className="font-serif text-[1.4rem] mt-5"
-            data-ngf-field={`team.members.${i}.name`}
-            data-ngf-label="Name"
-            data-ngf-type="text"
-            data-ngf-section="Team"
-          >
-            {content[`team.members.${i}.name`] || member.name || 'Team Member'}
-          </h3>
-
-          <p
-            className="mt-1 text-[0.72rem] uppercase tracking-[0.16em] text-[var(--muted)]"
-            data-ngf-field={`team.members.${i}.role`}
-            data-ngf-label="Role"
-            data-ngf-type="text"
-            data-ngf-section="Team"
-          >
-            {content[`team.members.${i}.role`] || member.role || 'Role'}
-          </p>
-
-          {showBio && (
-            <p
-              className="mt-4 text-[0.95rem] leading-relaxed text-[var(--muted)] whitespace-pre-line"
-              data-ngf-field={`team.members.${i}.bio`}
-              data-ngf-label="Bio"
-              data-ngf-type="textarea"
+            <h3
+              className="font-serif text-[1.4rem] mt-5"
+              data-ngf-field={`team.members.${member.index}.name`}
+              data-ngf-label="Name"
+              data-ngf-type="text"
               data-ngf-section="Team"
             >
-              {content[`team.members.${i}.bio`] || member.bio || ''}
+              {member.name}
+            </h3>
+
+            <p
+              className="mt-1 text-[0.72rem] uppercase tracking-[0.16em] text-[var(--muted)]"
+              data-ngf-field={`team.members.${member.index}.role`}
+              data-ngf-label="Role"
+              data-ngf-type="text"
+              data-ngf-section="Team"
+            >
+              {member.role}
             </p>
-          )}
+          </Link>
         </article>
       ))}
     </div>
-    </Lightbox>
   )
 }

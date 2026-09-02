@@ -50,13 +50,22 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
     })),
   ]
 
+  // Property Details is composed from three separate editable fields, so each
+  // renders its own hidden anchor below to stay individually editable.
   const details: Array<{ label: string; value: string; field: string; ngfLabel: string }> = [
-    { label: 'Property', value: project.stats, field: `showcase.projects.${i}.stats`, ngfLabel: 'Property Details' },
+    { label: 'Property Details', value: project.propertyDetails, field: `showcase.projects.${i}.stats`, ngfLabel: 'Property Details (legacy free text)' },
     { label: 'Location', value: project.location, field: `showcase.projects.${i}.location`, ngfLabel: 'Location' },
     { label: 'Staged By', value: project.designer, field: `showcase.projects.${i}.designer`, ngfLabel: 'Staged / Designed By' },
-    { label: 'Sales Contact', value: project.salesContact, field: `showcase.projects.${i}.salesContact`, ngfLabel: 'Sales Contact' },
-    { label: 'Listed By', value: project.agent, field: `showcase.projects.${i}.agent`, ngfLabel: 'Listing Agent Credit' },
-    { label: 'Photographed By', value: project.photographer, field: `showcase.projects.${i}.photographer`, ngfLabel: 'Photographer Credit' },
+    { label: 'Listed By', value: project.agent, field: `showcase.projects.${i}.agent`, ngfLabel: 'Listed By' },
+    { label: 'Photography', value: project.photographer, field: `showcase.projects.${i}.photographer`, ngfLabel: 'Photography' },
+  ]
+
+  // sqft / beds / baths are what the client actually edits; the visible
+  // "Property Details" row is their composed output.
+  const propertyParts: Array<{ key: string; label: string; value: string }> = [
+    { key: 'sqft', label: 'Square Footage', value: project.sqft },
+    { key: 'beds', label: 'Bedrooms', value: project.beds },
+    { key: 'baths', label: 'Bathrooms', value: project.baths },
   ]
 
   const others = all.filter(p => p.slug !== project.slug).slice(0, 3)
@@ -125,6 +134,21 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                   </div>
                 ))}
               </dl>
+
+              {/* Editable sources for the composed Property Details row. */}
+              <div className="sr-only" aria-hidden="true">
+                {propertyParts.map(part => (
+                  <span
+                    key={part.key}
+                    data-ngf-field={`showcase.projects.${i}.${part.key}`}
+                    data-ngf-label={part.label}
+                    data-ngf-type="text"
+                    data-ngf-section="Showcase Portfolio"
+                  >
+                    {part.value}
+                  </span>
+                ))}
+              </div>
 
               <p className="mt-8 text-[0.95rem] text-[var(--muted)]">
                 Interested in staging a listing like this?{' '}

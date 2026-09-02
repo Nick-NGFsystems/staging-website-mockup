@@ -48,7 +48,6 @@ export function SiteHeader({ content }: Props) {
   const lastY = useRef(0)
 
   const brandName = content['brand.businessName'] || 'Perrine Interiors'
-  const phone = content['brand.phone'] || '(616) 555-0100'
   const email = content['brand.email'] || 'perrinematerials@gmail.com'
 
   // The two tiers behave independently:
@@ -110,25 +109,14 @@ export function SiteHeader({ content }: Props) {
     >
       {/* Utility tier — shown only while at the very top of the page */}
       <div
-        className={`overflow-hidden border-b border-[var(--line)] transition-[max-height,opacity] duration-300 ease-out ${
+        className={`overflow-hidden transition-[max-height,opacity] duration-300 ease-out ${
           atTop ? 'max-h-12 opacity-100' : 'max-h-0 opacity-0'
         }`}
       >
         <div className="mx-auto flex w-full max-w-[1120px] items-center justify-end gap-5 px-4 h-10">
           <a
-            href={`tel:${phone.replace(/[^0-9+]/g, '')}`}
-            className="text-[0.68rem] uppercase tracking-[0.16em] text-[var(--muted)] hover:text-[var(--ink)] transition-colors"
-            data-ngf-field="brand.phone"
-            data-ngf-label="Phone Number"
-            data-ngf-type="text"
-            data-ngf-section="Brand"
-          >
-            {phone}
-          </a>
-          <span aria-hidden="true" className="h-3 w-px bg-[var(--line)]" />
-          <a
             href={`mailto:${email}`}
-            className="hidden sm:inline text-[0.68rem] uppercase tracking-[0.16em] text-[var(--muted)] hover:text-[var(--ink)] transition-colors"
+            className="text-[0.68rem] uppercase tracking-[0.16em] text-[var(--muted)] hover:text-[var(--ink)] transition-colors"
             data-ngf-field="brand.email"
             data-ngf-label="Email Address"
             data-ngf-type="text"
@@ -136,7 +124,7 @@ export function SiteHeader({ content }: Props) {
           >
             {email}
           </a>
-          <span aria-hidden="true" className="hidden sm:inline h-3 w-px bg-[var(--line)]" />
+          <span aria-hidden="true" className="h-3 w-px bg-[var(--line)]" />
           <a
             href="https://www.instagram.com"
             target="_blank"
@@ -148,7 +136,10 @@ export function SiteHeader({ content }: Props) {
         </div>
       </div>
 
-      <div className="mx-auto flex h-[78px] w-full max-w-[1120px] items-center justify-between gap-4 px-4">
+      <div className="mx-auto w-full max-w-[1120px] px-4">
+        {/* Wordmark row — centred; the mobile Menu button is positioned out of
+            flow so the wordmark stays optically centred on every breakpoint. */}
+        <div className="relative flex h-[62px] items-center justify-center">
         {/* Brand */}
         <Link
           href="/"
@@ -161,8 +152,19 @@ export function SiteHeader({ content }: Props) {
           {brandName}
         </Link>
 
-        {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-7" aria-label="Primary">
+        {/* Mobile toggle — word, not a hamburger icon */}
+        <button
+          className="md:hidden absolute right-0 border border-[var(--line)] bg-white text-[var(--ink)] px-4 text-[0.78rem] uppercase tracking-[0.14em] min-h-[44px]"
+          aria-expanded={mobileOpen}
+          aria-controls="mobile-nav"
+          onClick={() => setMobileOpen(v => !v)}
+        >
+          {mobileOpen ? 'Close' : 'Menu'}
+        </button>
+        </div>
+
+        {/* Desktop nav — centred beneath the wordmark */}
+        <nav className="hidden md:flex items-center justify-center gap-7 pb-4" aria-label="Primary">
           <Link href="/" className={navLinkClass('/')}>Home</Link>
           <Link href="/staging" className={navLinkClass('/staging')}>Services</Link>
           <Link href="/consultations" className={navLinkClass('/consultations')}>Consultations</Link>
@@ -181,7 +183,7 @@ export function SiteHeader({ content }: Props) {
                 className="inline-block w-[5px] h-[5px] border-r border-b border-current -translate-y-[2px] rotate-45 transition-transform duration-200 group-hover:translate-y-[1px] group-hover:rotate-[225deg]"
               />
             </button>
-            <div className="hidden group-hover:grid absolute top-full left-0 min-w-[190px] bg-white border border-[var(--line)] p-2 z-50 gap-1">
+            <div className="hidden group-hover:grid absolute top-full left-1/2 -translate-x-1/2 min-w-[190px] bg-white border border-[var(--line)] p-2 z-50 gap-1">
               {aboutLinks.map(l => (
                 <Link
                   key={l.href}
@@ -201,15 +203,6 @@ export function SiteHeader({ content }: Props) {
           <Link href="/contact" className={navLinkClass('/contact')}>Contact</Link>
         </nav>
 
-        {/* Mobile toggle — word, not a hamburger icon */}
-        <button
-          className="md:hidden border border-[var(--line)] bg-white text-[var(--ink)] px-4 text-[0.78rem] uppercase tracking-[0.14em] min-h-[44px]"
-          aria-expanded={mobileOpen}
-          aria-controls="mobile-nav"
-          onClick={() => setMobileOpen(v => !v)}
-        >
-          {mobileOpen ? 'Close' : 'Menu'}
-        </button>
       </div>
 
       {/* Mobile nav */}

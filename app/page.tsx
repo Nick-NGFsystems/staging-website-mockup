@@ -1,6 +1,8 @@
 import { getNgfContent, getItems } from '@/lib/ngf'
 import HeroCarousel, { type HeroSlide } from '@/components/HeroCarousel'
 import { TeamGrid } from '@/components/TeamGrid'
+import { getTeamMembers } from '@/lib/team'
+import { DEFAULT_TEAM } from '@/app/team/team-data'
 import { Lightbox, ZoomImage } from '@/components/Lightbox'
 
 const DEFAULT_HERO: HeroSlide[] = [
@@ -39,14 +41,7 @@ export default async function HomePage() {
         { title: 'Staging video title' },
       ]
 
-  const teamMembers = getItems(content, 'team.members')
-  const defaultTeam = teamMembers.length > 0
-    ? teamMembers
-    : [
-        { photo: '/placeholder-person.svg', name: 'Melissa Perrine', role: 'Founder' },
-        { photo: '/placeholder-person.svg', name: 'Team Member', role: 'Role' },
-        { photo: '/placeholder-person.svg', name: 'Team Member', role: 'Role' },
-      ]
+  const teamMembers = getTeamMembers(content, DEFAULT_TEAM)
 
   const blogItems = getItems(content, 'blog.posts')
   const defaultBlog = blogItems.length > 0
@@ -347,7 +342,7 @@ export default async function HomePage() {
             {content['home.teamIntro'] || 'Passionate professionals dedicated to making every home shine for its next chapter.'}
           </p>
 
-          <TeamGrid members={defaultTeam} content={content} />
+          <TeamGrid members={teamMembers} />
 
           <div className="mt-16 text-center">
             <a

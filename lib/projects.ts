@@ -13,11 +13,16 @@ export type Project = {
   imageAlt: string
   /** Detail-page fields. Blank by default — the client fills these in. */
   location: string
+  /** Legacy free-text property line; superseded by sqft/beds/baths. */
   stats: string
+  sqft: string
+  beds: string
+  baths: string
   designer: string
-  salesContact: string
   photographer: string
   agent: string
+  /** "3,200 sq ft | 4 Beds | 3 Baths", composed from the three fields above. */
+  propertyDetails: string
   /** Extra photographs shown in the detail-page gallery. */
   photos: string[]
 }
@@ -77,10 +82,17 @@ export function getProjects(
       imageAlt: row.image_alt || '',
       location: row.location || '',
       stats: row.stats || '',
+      sqft: row.sqft || '',
+      beds: row.beds || '',
+      baths: row.baths || '',
       designer: row.designer || '',
-      salesContact: row.salesContact || '',
       photographer: row.photographer || '',
       agent: row.agent || '',
+      propertyDetails: [
+        row.sqft ? `${row.sqft} sq ft` : '',
+        row.beds ? `${row.beds} Beds` : '',
+        row.baths ? `${row.baths} Baths` : '',
+      ].filter(Boolean).join(' | ') || row.stats || '',
       photos,
     }
   })
@@ -94,11 +106,12 @@ export const PROJECT_ITEM_FIELDS = JSON.stringify([
   { key: 'category', label: 'Category', type: 'text' },
   { key: 'description', label: 'Description', type: 'textarea' },
   { key: 'location', label: 'Location', type: 'text' },
-  { key: 'stats', label: 'Property Details (e.g. 3,200 sq ft | 4 Beds | 3 Baths)', type: 'text' },
+  { key: 'sqft', label: 'Square Footage (e.g. 3,200)', type: 'text' },
+  { key: 'beds', label: 'Bedrooms', type: 'text' },
+  { key: 'baths', label: 'Bathrooms', type: 'text' },
   { key: 'designer', label: 'Staged / Designed By', type: 'text' },
-  { key: 'salesContact', label: 'Sales Contact', type: 'text' },
-  { key: 'photographer', label: 'Photographer Credit', type: 'text' },
-  { key: 'agent', label: 'Listing Agent Credit', type: 'text' },
+  { key: 'agent', label: 'Listed By', type: 'text' },
+  { key: 'photographer', label: 'Photography', type: 'text' },
   { key: 'photo1', label: 'Gallery Photo 1', type: 'image', aspect: '4:3' },
   { key: 'photo2', label: 'Gallery Photo 2', type: 'image', aspect: '4:3' },
   { key: 'photo3', label: 'Gallery Photo 3', type: 'image', aspect: '4:3' },
