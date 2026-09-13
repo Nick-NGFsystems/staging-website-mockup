@@ -12,3 +12,6 @@
 *.pdf  binary
 *.woff binary
 *.woff2 binary
+
+# Vercel runs this with bash; CRLF makes every line fail and every deploy fail.
+*.sh text eol=lf
