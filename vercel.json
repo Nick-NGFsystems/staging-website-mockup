@@ -1,5 +1,4 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": "nextjs",
-  "ignoreCommand": "git diff --quiet HEAD^ HEAD -- . ':(exclude)*.md' ':(exclude)docs/**'"
+  "ignoreCommand": "bash \"$(git rev-parse --show-toplevel 2>/dev/null || echo .)/scripts/vercel-skip-docs.sh\""
 }
