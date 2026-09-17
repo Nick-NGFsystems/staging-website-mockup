@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next'
-import { getNgfContent } from '@/lib/ngf'
+import { getNgfContent, siteBaseUrl } from '@/lib/ngf'
 import { getProjects } from '@/lib/projects'
 import { getTeamMembers } from '@/lib/team'
 import { DEFAULT_TEAM } from './team/team-data'
@@ -9,8 +9,7 @@ import { DEFAULT_PROJECTS } from './showcase/projects-data'
 // create — a page missing here is effectively invisible to Google.
 // Required by the SEO launch gate in NGF-STANDARDS.
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const raw = process.env.NEXT_PUBLIC_SITE_URL || 'example.com'
-  const base = `https://${raw.replace(/^https?:\/\//, '').replace(/\/$/, '')}`
+  const base = siteBaseUrl()
   const now = new Date()
 
   const staticPages: MetadataRoute.Sitemap = [
