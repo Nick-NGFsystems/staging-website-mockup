@@ -50,7 +50,14 @@ The universal foundation for every NGF client website lives at:
 
 ## Setup checklist
 
-- [ ] Set `NEXT_PUBLIC_SITE_URL` in Vercel env vars to `https://perineinteriors.com` (or confirmed domain)
+- [ ] **Confirm the domain first** — it is not verified. The business is *Perrine*
+  Interiors (two r's); `perineinteriors.com` has no DNS record and
+  `perrineinteriors.com` returns a Wix "ConnectYourDomain Error" 404. Ask Nick.
+- [ ] Set `NEXT_PUBLIC_SITE_URL` in Vercel env vars to the **confirmed** domain.
+  Until then leave it unset: `siteBaseUrl()` falls back to the Vercel production
+  URL, which resolves. Note this repo is built by TWO Vercel projects
+  (`ngf-systems-projects` and `aidenburnzys-projects`); with the var unset they
+  advertise different hosts, so setting it explicitly is what makes them agree
 - [ ] Set `NGF_APP_URL` (optional — defaults to `https://app.ngfsystems.com`)
 - [ ] Set `WEBSITE_REVALIDATION_SECRET` (must match the value in the NGF app)
 - [ ] Set `RESEND_API_KEY` for contact form email delivery

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter, Playfair_Display } from 'next/font/google'
 import NgfEditBridge from '@/components/NgfEditBridge'
-import { getNgfContent } from '@/lib/ngf'
+import { getNgfContent, siteBaseUrl } from '@/lib/ngf'
 import { PageChrome } from '@/components/layout/PageChrome'
 import { LocalBusinessSchema } from '@/app/local-business-schema'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
@@ -22,7 +22,7 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://perineinteriors.com'),
+  metadataBase: new URL(siteBaseUrl()),
   other: {
     'ngf-public-api': 'https://app.ngfsystems.com/api/public/content',
   },

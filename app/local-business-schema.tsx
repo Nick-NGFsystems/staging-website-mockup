@@ -6,8 +6,13 @@
  * confirmed yet are intentionally omitted rather than guessed. Fill in the
  * TODOs below once Melissa confirms them, then delete the TODO comments.
  */
+import { siteBaseUrl } from '@/lib/ngf'
+
 export function LocalBusinessSchema() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://perineinteriors.com'
+  // One host for the whole site: NEXT_PUBLIC_SITE_URL, else the Vercel
+  // production URL. A second fallback chain here is how this file came to
+  // advertise a domain the sitemap never used.
+  const siteUrl = siteBaseUrl()
 
   const schema = {
     '@context': 'https://schema.org',
