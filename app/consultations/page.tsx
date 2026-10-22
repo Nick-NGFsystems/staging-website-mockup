@@ -107,9 +107,6 @@ export default async function ConsultationsPage() {
           <div className="grid md:grid-cols-3 gap-6">
             {/* Step 1 */}
             <div className="bg-white border border-[var(--line)] rounded-[14px] p-6 shadow-[0_1px_2px_rgba(0,0,0,0.04)] text-center">
-              <div className="w-12 h-12 rounded-full bg-[var(--brand)] text-white font-bold text-lg flex items-center justify-center mx-auto mb-4">
-                1
-              </div>
               <h3
                 className="font-serif text-lg mb-3"
                 data-ngf-field="consultations.step1Title"
@@ -131,9 +128,6 @@ export default async function ConsultationsPage() {
             </div>
             {/* Step 2 */}
             <div className="bg-white border border-[var(--line)] rounded-[14px] p-6 shadow-[0_1px_2px_rgba(0,0,0,0.04)] text-center">
-              <div className="w-12 h-12 rounded-full bg-[var(--brand)] text-white font-bold text-lg flex items-center justify-center mx-auto mb-4">
-                2
-              </div>
               <h3
                 className="font-serif text-lg mb-3"
                 data-ngf-field="consultations.step2Title"
@@ -155,9 +149,6 @@ export default async function ConsultationsPage() {
             </div>
             {/* Step 3 */}
             <div className="bg-white border border-[var(--line)] rounded-[14px] p-6 shadow-[0_1px_2px_rgba(0,0,0,0.04)] text-center">
-              <div className="w-12 h-12 rounded-full bg-[var(--brand)] text-white font-bold text-lg flex items-center justify-center mx-auto mb-4">
-                3
-              </div>
               <h3
                 className="font-serif text-lg mb-3"
                 data-ngf-field="consultations.step3Title"

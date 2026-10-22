@@ -176,12 +176,6 @@ export function SiteHeader({ content }: Props) {
               aria-haspopup="true"
             >
               About
-              {/* Caret drawn in CSS (a rotated corner), not an icon asset.
-                  Flips to point up while the menu is open. */}
-              <span
-                aria-hidden="true"
-                className="inline-block w-[5px] h-[5px] border-r border-b border-current -translate-y-[2px] rotate-45 transition-transform duration-200 group-hover:translate-y-[1px] group-hover:rotate-[225deg]"
-              />
             </button>
             <div className="hidden group-hover:grid absolute top-full left-1/2 -translate-x-1/2 min-w-[190px] bg-white border border-[var(--line)] p-2 z-50 gap-1">
               {aboutLinks.map(l => (
@@ -228,19 +222,15 @@ export function SiteHeader({ content }: Props) {
             </Link>
           ))}
 
-          {/* About accordion — text state, no chevron */}
+          {/* About accordion — text only, no chevron */}
           <button
-            className="px-3 text-[0.78rem] uppercase tracking-[0.14em] min-h-[44px] flex items-center justify-between text-left hover:bg-[#f4f4f4] transition-colors"
+            className={`px-3 text-[0.78rem] uppercase tracking-[0.14em] min-h-[44px] flex items-center text-left transition-colors ${
+              aboutOpen ? 'bg-[#f4f4f4]' : 'hover:bg-[#f4f4f4]'
+            }`}
             aria-expanded={aboutOpen}
             onClick={() => setAboutOpen(v => !v)}
           >
-            <span>About</span>
-            <span
-              aria-hidden="true"
-              className={`inline-block w-[5px] h-[5px] border-r border-b border-current mr-1 transition-transform duration-200 ${
-                aboutOpen ? 'translate-y-[1px] rotate-[225deg]' : '-translate-y-[2px] rotate-45'
-              }`}
-            />
+            About
           </button>
           {aboutOpen && (
             <div className="pl-4 flex flex-col gap-1">
